@@ -1,3 +1,5 @@
+[![Clippy Rust Lint with Github Actions](https://github.com/sktan888/handwriting_recognition_logistic_regression/actions/workflows/main.yml/badge.svg)](https://github.com/sktan888/handwriting_recognition_logistic_regression/actions/workflows/main.yml)
+
 # handwriting_recognition_logistic_regression
 This is RUST implementation of logistic regression of handwriting recognition
 
