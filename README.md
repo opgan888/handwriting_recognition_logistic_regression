@@ -24,7 +24,34 @@ release:
 	cargo build --release
 all: format lint test run
 ```
-* add new project ```Cargo add project```
+* add new project ```Cargo add project``` ``` tree.```
+``` 
+.
+├── Cargo.lock
+├── Cargo.toml
+├── Makefile
+├── README.md
+├── assets
+│   └── images
+│       ├── digitHW.png
+│       ├── hw.png
+│       ├── lr.webp
+│       ├── nine.jpeg
+│       ├── nn.png
+│       └── sigmoid.png
+├── data
+│   ├── t10k-images-idx3-ubyte
+│   ├── t10k-labels-idx1-ubyte
+│   ├── train-images-idx3-ubyte
+│   └── train-labels-idx1-ubyte
+├── src
+│   ├── data.rs
+│   ├── helper.rs
+│   ├── lib.rs
+│   └── main.rs
+└── tests
+    └── test_helper.rs
+```
 * add dependencies in Cargo.toml 
 ```
 [dependencies]
