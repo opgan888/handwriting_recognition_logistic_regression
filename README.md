@@ -35,7 +35,7 @@ statrs = "0.17.1"
 ```
 
 
-## Neural Network in python
+## RUST implementation
 * Injest in data.py ``` pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>) {} ```
 
     The MNIST database (Modified National Institute of Standards and Technology database) is a large database of handwritten digits. (https://yann.lecun.com/exdb/mnist/)
