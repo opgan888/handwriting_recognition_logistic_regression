@@ -1,7 +1,7 @@
 
-use ndarray::{Array2};
-use std::f32::consts::LOG10_E;
-use std::collections::HashMap;
+use ndarray::{Array2, array};
+//use std::f32::consts::LOG10_E;
+//use std::collections::HashMap;
 use std::f32::consts::E;
 
 //pub fn sigmoid(z: f32) -> f32 {
@@ -40,7 +40,7 @@ pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
 }
 
 
-pub fn propagate<K, V>(w: Array2<f32>, b: f32, X: Array2<f32>, Y: Array2<f32>) -> (HashMap<K, V>, f32){
+pub fn propagate(w: &Array2<f32>, b: &f32, X: &Array2<f32>, Y: &Array2<f32>) -> (Array2<f32>, f32, f32) { 
     /*
     Implement the cost function and its gradient for the propagation explained above
 
@@ -71,26 +71,38 @@ pub fn propagate<K, V>(w: Array2<f32>, b: f32, X: Array2<f32>, Y: Array2<f32>) -
     */
     
     // A = sigmoid(np.dot(np.transpose(w), X) + b)
-    let A = sigmoid(w.t().dot(&X) + b);
+    //let A = sigmoid((w.t()).dot(X) + *b);
+    // ???
+    let A = (w.t()).dot(X) + *b;
+    let owned_w = A.to_owned();
+    let dw = owned_w;
+    let db = 0.0;
+    let cost = 0.0;
+/*
 
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
-    let cost = (-1 / m) * (Y * A.mapv(|x| x.log10()) + (1 - Y) * (1 - A).mapv(|x| x.log10())).iter().sum();
+    let cost = (-1.0 / (m as f32)) * (Y * A.mapv(|x| x.log10()) + (1.0 - Y) * (1.0 - A).mapv(|x| x.log10())).iter().sum::<f32>();
 
     //# BACKWARD PROPAGATION (TO FIND GRAD)
     
     // dw = (1 / m) * np.dot(X, np.transpose(A - Y))
-    let dw = (1 / m) * X.dot(&(A - Y).t());
+    let dw = (1.0 / m as f32) * X.dot(&((A - Y).t())); // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
-    let db = (1 / m) * (A - Y).iter().sum();
+    let db = (1.0 / m as f32) * (A - Y).iter().sum::<f32>();
 
+    /*
     // cost = np.squeeze(np.array(cost))
     let mut grads = HashMap::new();
 
     // grads = {"dw": dw, "db": db}
     // Insert key-value pairs
-    grads.insert("dw", dw);
-    grads.insert("db", db);
+    let dw_id = "weight_matrix_1";
+    grads.insert(dw_id.to_string(), dw);
+    grads.insert("db".to_string(), db);
+    */
 
-    (grads, cost)
+    */
+    (dw, db, cost)
+
 }
