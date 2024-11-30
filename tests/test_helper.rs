@@ -5,11 +5,9 @@ use ndarray::{Array2, array};
 
 #[test]
 fn test_sigmoid() {
-    //let input = Array2::from([[1.0, 2.0], [3.0, 4.0]]);
-    let input = array![[0.0], [0.0]];
+    let input = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
     let result = sigmoid(input);
-    //let expected = Array2::from([[0.5]]);
-    let expected = array![[0.5], [0.5]];
+    let expected = Array2::from_shape_vec((2, 1), vec![0.5, 0.5]).unwrap();  
     assert_eq!(result, expected);
 }
 
@@ -22,19 +20,28 @@ fn test_initialize_with_zeros() {
 
 #[test]
 fn test_propagate() {
-    //let w = Array2::from([[1.0], [1.0]]);
-    let w = array![[[1.0], [1.0]]];
-    let b = 1.0;
-    //let X = Array2::from([[1.0], [1.0]]);
-    //let Y = Array2::from([[1.0]]);
-    let X = array![[[1.0], [1.0]]];
-    let Y = array![[[1.0]]];
     
-    let (dw, db, cost) = propagate(&w, &b, &X, &Y);
+    //let data = vec![1.0];
+    //let shape = (1, 1);
 
-    let result = dw;
-    // Expected output based on the given inputs
-    let expected = dw; //array![[[4.0]]]; //Array2::from([[4.]]);
+    let w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+    let b = 0.0;
+
+    let X = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap();
+    let Y = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
+
+    let (dw, db, cost) = propagate(&w, b, &X, &Y);
+
+    let result =  &dw;
+    let expected = Array2::from_shape_vec((2, 1), vec![-0.5, -0.5]).unwrap(); 
+    assert_eq!(result, expected);
+
+    let result =  cost;
+    let expected = 0.30103; 
+    assert_eq!(result, expected);
+
+    let result =  db;
+    let expected = -0.5; 
     assert_eq!(result, expected);
 
 }

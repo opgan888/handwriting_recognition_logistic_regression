@@ -223,67 +223,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     )
 
     /*
-    let dims = flattened_train_data.dim(); // This is of type `ndarray::Dim<[usize; 3]>`
-    //let (_row, _col) = dims.into(); // Extract dimensions as tuple
-    println!("Flattened train dim: {:?}", dims);
-
-    // Create a 2D array
-    let array: Array2<i32> = arr2(&[[1, 2, 3], [4, 5, 6]]);
-    println!("Shape of  2D array: {:?}", array.shape());
-
-    let (flattened_vec, _) = array.into_raw_vec_and_offset();
-    println!("Shape of flattened_vec: {:?}", flattened_vec.len());
-
-    let _nested_array: [[i32; 3]; 2] = [[1, 2, 3], [4, 5, 6]];
-
-    let vec3d: Vec<Vec<Vec<i32>>> = vec![
-        vec![vec![1, 2, 3], vec![4, 5, 6]],
-        vec![vec![7, 8, 9], vec![10, 11, 12]],
-    ];
-    let element = vec3d[1][0][2]; // Accesses the element at (1, 0, 2)
-
-    println!("element: {:?}", element);
-
-
-    let a: Array3<i32> = Array3::zeros((8, 5, 2));
-
-    println!("Shape of array3d: {:?}", a.shape());
-
-    let _array_dd: Array3<i32> = Array3::zeros((2, 3, 4)); // Create a 2x3x4 array filled with zeros
-
-    let a = arr3(&[
-        [
-        [ 1,  2,  3],     // -- 2 rows  \_
-        [ 4,  5,  6]],    // --         /
-        [
-        [ 7,  8,  9],     //            \_ 2 submatrices
-        [10, 11, 12]
-        ]
-        ]);  //            /
-        //  3 columns ..../.../.../
-
-
-    let b = arr3(&[
-        [
-        [ 1,  2,  3],     // -- 2 rows  \_
-        [ 4,  5,  6]
-        ]
-        ]);  //            /
-        //  3 columns ..../.../.../
-
-    let c = arr2(&[
-        [ 1,  2,  3],
-        [ 4,  5,  6]
-        ]);
-
-
-    assert_eq!(a.shape(), &[2, 2, 3]);
-    assert_eq!(b.shape(), &[1, 2, 3]);
-    assert_eq!(c.shape(), &[2, 3]);
-    println!("Shape of array3d: {:?}", a.shape());
-    println!("Shape of array2d: {:?}", b.shape());
-    println!("Shape of array2d: {:?}", c.shape());
-
         // Access the dimension information
         /*
         let dim = arr.dim(); // This is of type `ndarray::Dim<[usize; 3]>`
@@ -291,50 +230,4 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         */
     */
 
-    /*
-    //let _array = train_set_y_binary;
-    let target_number = &3; // a reference to the integer, efficient memory management and preventing unnecessary copying
-    let target_number_f = &3_f32; // explicitly specifies the type of the number as a 32-bit floating-point number
-
-    let numbers = [1, 2, 3, 4, 5];  // Fixed Size: Once created, a list's size cannot be changed. allocated on the stack
-    let numbers_v = vec![1, 2, 3, 4, 5]; // vector: size cannot be changed. grow and shrink dynamically. allocated on the heap
-    let numbers_f: Vec<f32> = numbers_v.iter().map(|&x| x as f32).collect(); // convert a Vec<i32> to Vec<f32> using the iter() method, the map() method and the collect() method.
-    println!(" Vec<f32> {:?}", numbers_f);
-
-    let index2 = find_indices_filter(&numbers, target_number); // search List
-    println!("Found {} at index {:?} in List", target_number, index2); //  :? is formatting specifier used with the println! macro
-    let index2 = find_indices_filter(&numbers_v, target_number); // search Vector of Vec<i32>
-    println!("Found {} at index {:?} in Vector<i32>", target_number, index2);
-    let index2 = find_indices_filter(&numbers_f, target_number_f); // search Vector of  Vec<f32>
-    println!("Found {} at index {:?} in Vector<f32>", target_number, index2);
-
-    */
-
-    // train_labels
-    //let submatrix2 = train_labels.slice(s![0..10, 0..1]);
-    //println!("Submatrix 2: {:?}", submatrix2);
-
-    /*
-    let arr: [i32; 10000] = [0; 10000]; // Create an array of 10000 zeros
-
-    // Slice the first 10 elements
-    let first_10 = &arr[0..10];
-    println!("size of slice: {:?}", first_10.len());
-
-    let arr = Array2::from_shape_fn((3, 3), |(i, j)| {
-        (i * 3 + j + 1) as i32
-    });
-    // Slice the first row
-    let first_row = &arr.row(0);
-
-    // Slice the second column
-    let second_column: Vec<i32> = arr.column(1).iter().cloned().collect();
-
-    // Slice a submatrix
-    let submatrix = arr.slice(s![1..3, 1..3]);
-
-    println!("First row: {:?}", first_row);
-    println!("Second column: {:?}", second_column);
-    println!("Submatrix: {:?}", submatrix.shape());
-    */
 }
