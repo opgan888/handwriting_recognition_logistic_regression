@@ -2,6 +2,8 @@ use ndarray::Array2;
 //use std::f32::consts::LOG10_E;
 //use std::collections::HashMap;
 use std::f32::consts::E;
+use log::{debug, error, info, warn};
+
 
 //pub fn sigmoid(z: f32) -> f32 {
 pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
@@ -87,7 +89,16 @@ pub fn propagate(
     let dw = (1.0 / m as f32) * X.dot(&((&A - Y).t())); // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
-    let db = (1.0 / m as f32) * (A - Y).iter().sum::<f32>();
+    let db = (1.0 / m as f32) * (&A - Y).iter().sum::<f32>();
+
+    debug!("propagate debug message: w {:?}.", &w);
+    debug!("propagate debug message: b {:?}.", b);
+
+    debug!("propagate debug message: A {:?}.", &A);
+    debug!("propagate debug message: dw {:?}.", &dw);
+    debug!("propagate debug message: db {:?}.", db);
+    debug!("propagate debug message: cost {:?}.", cost);
+    debug!("propagate debug message: m {:?}.", m);
 
     (dw, db, cost)
 }
@@ -100,7 +111,9 @@ pub fn optimize(
     num_iterations: i32,
     learning_rate: f32,
     print_cost: bool,
-) -> (Array2<f32>, f32, Array2<f32>, f32, Vec<f32>) {
+) ->  Result<(Array2<f32>, f32, Array2<f32>, f32, Vec<f32>), Box<dyn std::error::Error>>  {
+    
+   // (Array2<f32>, f32, Array2<f32>, f32, Vec<f32>) 
     /*
     This function optimizes w and b by running a gradient descent algorithm
 
@@ -124,6 +137,8 @@ pub fn optimize(
         2) Update the parameters using gradient descent rule for w and b.
     */
 
+    info!("optimize starts");
+
     //w = copy.deepcopy(w)
     //b = copy.deepcopy(b)
 
@@ -143,9 +158,12 @@ pub fn optimize(
         // Cost and gradient calculation
         // grads, cost = ...
         // grads, cost = propagate(w, b, X, Y)
-        (dw, db, cost) = propagate(w, b, X, Y);
-
+        // (dw, db, cost) = propagate(w, b, X, Y);
+        (dw, db, cost) = propagate(&w_owned, b_owned, X, Y);
         // # YOUR CODE ENDS HERE
+
+        debug!("optimize debug message: cost {:?}.", cost);
+
         /*
         # Retrieve derivatives from grads
         dw = grads["dw"]
@@ -159,9 +177,11 @@ pub fn optimize(
 
         w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
         b_owned -= learning_rate * b;
+        //w = &w_owned;
+        //b = b_owned;
 
         // Record the costs
-        if i % 100 == 0 {
+        if i % 10 == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
             costs.push(cost);
@@ -178,7 +198,7 @@ pub fn optimize(
     grads = {"dw": dw, "db": db}
     (params, grads, costs)
     */
-    (w_owned, b_owned, dw, db, costs)
+    Ok((w_owned, b_owned, dw, db, costs))
 }
 
 pub fn predict(w: &Array2<f32>, b: f32, X: &Array2<f32>) -> Array2<f32> {
@@ -287,7 +307,7 @@ pub fn model(
         w, b, X_train, Y_train, num_iterations, learning_rate, print_cost
     )
     */
-    let (w, b, _dw, _db, costs) = optimize(
+    let Ok((w, b, _dw, _db, costs)) = optimize(
         &w,
         b,
         X_train,
@@ -295,7 +315,8 @@ pub fn model(
         num_iterations,
         learning_rate,
         print_cost,
-    );
+    )else { todo!()  };
+    // println!("logging exception");
 
     // w = params["w"]
     // b = params["b"]

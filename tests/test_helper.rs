@@ -5,7 +5,7 @@ use handwritingrecognition::helper::predict;
 use handwritingrecognition::helper::propagate;
 use handwritingrecognition::helper::sigmoid;
 
-use ndarray::{array, Array2};
+use ndarray::{Array2};
 
 #[test]
 fn test_sigmoid() {

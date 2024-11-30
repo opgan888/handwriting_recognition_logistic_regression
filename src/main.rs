@@ -1,9 +1,23 @@
 mod data;
 use handwritingrecognition::data::injest;
 use handwritingrecognition::helper::sigmoid;
+use handwritingrecognition::helper::model;
 use std::env;
+use ndarray::{Array2};
+use log::{debug, error, info, warn};
+use fern::Dispatch;
+use log::{LevelFilter};
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>>{
+    // Initialize the logger
+    fern::Dispatch::new()
+    .format(|out, message, record| {
+        out.finish(format_args!("[{}] [{}] {}", record.level(), record.target(), message))
+    })
+    .level(LevelFilter::Debug)    
+    .chain(fern::log_file("debugging.log")?)
+    .apply().unwrap();
+
     let args: Vec<String> = env::args().collect();
     println!("Logistic Regression classification of handwriting digits");
 
@@ -12,13 +26,13 @@ fn main() {
     //let s_string: String = s.to_owned();
     let param: &str = &args[3]; // a string rep digit, index, file name
     match cmd {
-        "injest" => injest_cmd(param),
-        "modeling" => model_cmd(param),
-        "predict_test_example" => predict_test_example_cmd(param),
-        "predict_unseen_example" => predict_unseen_example_cmd(param),
-        _ => println!(
+        "injest" => Ok(injest_cmd(param)),
+        "modeling" => Ok(model_cmd(param)),
+        "predict_test_example" => Ok(predict_test_example_cmd(param)),
+        "predict_unseen_example" => Ok(predict_unseen_example_cmd(param)),
+        _ => Ok(println!(
             "Enter a command: injest, modeling, predict_test_example, predict_unseen_example"
-        ),
+        )),
     }
 }
 
@@ -53,9 +67,15 @@ fn model_cmd(string_number: &str) {
     println!("Model trained to classify a digit of {}!", string_number);
     let digit: f32 = string_number.parse().unwrap();
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
-    /*
-    model
-    (
+    let mut num_iterations = 101;
+    let mut learning_rate = 0.005;
+    let print_cost = true;
+    let mut costs: Vec<f32> = Vec::new(); // Create an empty vector
+    let mut Y_prediction_test = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
+    let mut Y_prediction_train = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
+    let mut w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+    let mut b = 0.0;
+    let (
         costs,
         Y_prediction_test,
         Y_prediction_train,
@@ -64,15 +84,18 @@ fn model_cmd(string_number: &str) {
         learning_rate,
         num_iterations,
     ) = model(
-        &X_train,
-        &Y_train,
-        &X_test,
-        &Y_test,
+        &_train_x,
+        &_train_y,
+        &_test_x,
+        &_test_y,
         num_iterations,
         learning_rate,
         print_cost,
     );
-    */
+    // save model to a file
+    //click.echo("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
+    println!("Cost is {:?}!",costs);
+    //log("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
 }
 
 /*
