@@ -68,31 +68,30 @@ statrs = "0.17.1"
     The MNIST database (Modified National Institute of Standards and Technology database) is a large database of handwritten digits. (https://yann.lecun.com/exdb/mnist/)
     - Download (https://git-disl.github.io/GTDLBench/datasets/mnist_datasets/)
     - Consisting of 70,000 28x28 black-and-white images of handwritten digits
-    - 10 classes 0 to 9: one class for each  digit
+    - 10 classes or labels from 0 to 9: one class/label for each  digit
     - 60,000 images in the training dataset, 10,000 images in the validation dataset
     - 7,000 images (6,000 train images and 1,000 test images) for each digit/class
-    - Non binary classification of MNIST for 0 to 9, would require 10 output neurons to classify all 10 digits
-    - Binary classification NN simplies to telling if a handwriting is the trained digit
+    - Classification of handwriting from 0 to 9, would require a NN with 10 outputs to classify all 10 digits
+    - Logistic regression could only classify if a handwriting matches a given digit or not
 
 * EDA
     - Each image is represented as an array of pixels of shape=(28, 28, 1), dtype=uint8
-    - Each pixel is an integer between 0 and 255 
+    - Each pixel is between 0 and 255 
     - Label of the image is the numerical digit
     - Visualization:
         - ![Handwriting](/assets/images/digitHW.png)
 
-* Modelling
-    - NN with input layer (as many nodes X features), a hidden layer (one node) and an output layer (one node for Binary output)
+* Logistic Regression
+    - Classify into 2 classes
+        - ![LogisticRegression](/assets/images/lr.webp
+    - Similar is same as one layer NN with one node 
         - ![NN](/assets/images/nn.png)
     - Sigmoid
         - ![Sigmoid](/assets/images/sigmoid.png)
-    - Logistic Regression
-        - ![LogisticRegression](/assets/images/lr.webp) 
+) 
 * Conclusion
 
-* Saving trained NN parameters (i.e. w and b) in NPY Files
-    - NPY files are a binary file format used to store NumPy arrays efficiently storing large arrays and loading back
-
-* Command Line: ``` cargo run main 4 ``` 4 refers to the number for recognising 
-
-* Test: ``` cargo test ```
+* Command Line
+    - Saving trained model parameters (i.e. w and b) in files
+    - Run main command: ``` cargo run main 4 ``` 4 refers to the number for recognising 
+    - Run test command: ``` cargo test ```

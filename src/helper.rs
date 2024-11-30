@@ -1,11 +1,10 @@
-
-use ndarray::{Array2, array};
+use ndarray::Array2;
 //use std::f32::consts::LOG10_E;
 //use std::collections::HashMap;
 use std::f32::consts::E;
 
 //pub fn sigmoid(z: f32) -> f32 {
-pub fn sigmoid(z: Array2<f32>) -> Array2<f32>{
+pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
     /*
     Compute the sigmoid of z as 1 / (1 + np.exp(-z))
     Apply the exponential function to each element
@@ -38,7 +37,12 @@ pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
     (owned_w, b)
 }
 
-pub fn propagate(w: &Array2<f32>, b: f32, X: &Array2<f32>, Y: &Array2<f32>) -> (Array2<f32>, f32, f32) {  
+pub fn propagate(
+    w: &Array2<f32>,
+    b: f32,
+    X: &Array2<f32>,
+    Y: &Array2<f32>,
+) -> (Array2<f32>, f32, f32) {
     /*
     Implement the cost function and its gradient for the propagation explained above
 
@@ -67,27 +71,36 @@ pub fn propagate(w: &Array2<f32>, b: f32, X: &Array2<f32>, Y: &Array2<f32>) -> (
     # compute cost by using np.dot to perform multiplication.
     # And don't use loops for the sum.
     */
-    
+
     //let A = sigmoid(np.dot(np.transpose(w), X) + b)
     let A = sigmoid((w.t()).dot(X) + b);
 
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
-    let cost = (-1.0 / (m as f32)) * (Y * &A.mapv(|x| x.log10()) + (1.0 - Y) * (1.0 - &A).mapv(|x| x.log10())).iter().sum::<f32>();
-    
+    let cost = (-1.0 / (m as f32))
+        * (Y * &A.mapv(|x| x.log10()) + (1.0 - Y) * (1.0 - &A).mapv(|x| x.log10()))
+            .iter()
+            .sum::<f32>();
+
     //# BACKWARD PROPAGATION (TO FIND GRAD)
-    
+
     // dw = (1 / m) * np.dot(X, np.transpose(A - Y))
     let dw = (1.0 / m as f32) * X.dot(&((&A - Y).t())); // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
     let db = (1.0 / m as f32) * (A - Y).iter().sum::<f32>();
-    
 
     (dw, db, cost)
-
 }
 
-pub fn optimize(w, b, X, Y, num_iterations=100, learning_rate=0.009, print_cost=False) -> (Array2<f32>, Array2<f32>, f32, f32) {
+pub fn optimize(
+    w: &Array2<f32>,
+    b: f32,
+    X: &Array2<f32>,
+    Y: &Array2<f32>,
+    num_iterations: i32,
+    learning_rate: f32,
+    print_cost: bool,
+) -> (Array2<f32>, f32, Array2<f32>, f32, Vec<f32>) {
     /*
     This function optimizes w and b by running a gradient descent algorithm
 
@@ -111,43 +124,64 @@ pub fn optimize(w, b, X, Y, num_iterations=100, learning_rate=0.009, print_cost=
         2) Update the parameters using gradient descent rule for w and b.
     */
 
-    w = copy.deepcopy(w)
-    b = copy.deepcopy(b)
+    //w = copy.deepcopy(w)
+    //b = copy.deepcopy(b)
 
-    costs = []
+    let mut w_owned = w.to_owned();
+    let mut b_owned = b;
 
-    for i in range(num_iterations):
-        # Cost and gradient calculation
-        # grads, cost = ...
-        grads, cost = propagate(w, b, X, Y)
+    // let dw = , db, cost)
+    // costs = []
+    let mut costs = Vec::new(); // Create an empty vector
 
-        # YOUR CODE ENDS HERE
+    let mut dw: Array2<f32> = Array2::zeros((X.shape()[0], 1)); // (row (features), col (examples)) refers to (num_px * num_px * 3, number of examples)
+    let mut db = 0.0;
+    let mut cost = 0.0;
 
+    for i in 1..num_iterations {
+        //for i in range(num_iterations):
+        // Cost and gradient calculation
+        // grads, cost = ...
+        // grads, cost = propagate(w, b, X, Y)
+        (dw, db, cost) = propagate(w, b, X, Y);
+
+        // # YOUR CODE ENDS HERE
+        /*
         # Retrieve derivatives from grads
         dw = grads["dw"]
         db = grads["db"]
 
-        # update rule (≈ 2 lines of code)
+
+        // update rule (≈ 2 lines of code)
         w -= learning_rate * dw
         b -= learning_rate * db
+        */
 
-        # Record the costs
-        if i % 100 == 0:
-            costs.append(cost)
+        w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
+        b_owned -= learning_rate * b;
 
-            # Print the cost every 100 training iterations
-            if print_cost:
-                print("Cost after iteration %i: %f" % (i, cost))
+        // Record the costs
+        if i % 100 == 0 {
+            //if i % 100 == 0:
+            // costs.append(cost)
+            costs.push(cost);
 
+            // Print the cost every 100 training iterations if request is True
+            // print!("Cost after iteration %i: %f" % (i, cost))
+            if print_cost {
+                println!("Cost after iteration {:?}: {:?}", i, cost);
+            }
+        }
+    }
+    /*
     params = {"w": w, "b": b}
-
     grads = {"dw": dw, "db": db}
-
     (params, grads, costs)
+    */
+    (w_owned, b_owned, dw, db, costs)
 }
 
-/*
-pub fn predict(w, b, X) -> f32 {
+pub fn predict(w: &Array2<f32>, b: f32, X: &Array2<f32>) -> Array2<f32> {
     /*
     Predict whether the label is 0 or 1 using learned logistic regression parameters (w, b)
 
@@ -160,38 +194,60 @@ pub fn predict(w, b, X) -> f32 {
     Y_prediction -- a numpy array (vector) containing all predictions (0/1) for the examples in X
     */
 
-    m = X.shape[1]
-    Y_prediction = np.zeros((1, m))
-    w = w.reshape(X.shape[0], 1)
+    // m = X.shape[1]
+    let m = X.shape()[1];
 
-    # Compute vector "A" predicting the probabilities of a cat being present in the picture
-    A = sigmoid(np.dot(np.transpose(w), X) + b)
+    // Y_prediction = np.zeros((1, m))
+    let mut Y_prediction: Array2<f32> = Array2::zeros((1, m));
 
-    # Using loop
+    // ensure column vector
+    // w = w.reshape(X.shape[0], 1)
+    assert_eq!(w.shape(), &[X.shape()[0], 1]);
+    w.to_shape((X.shape()[0], 1)).unwrap();
+
+    // # Compute vector "A" predicting the probabilities of a cat being present in the picture
+    // A = sigmoid(np.dot(np.transpose(w), X) + b)
+    let A = sigmoid((w.t()).dot(X) + b);
+
+    // # Using loop
+    /*
     for i in range(A.shape[1]):
-
         # Convert probabilities A[0,i] to actual predictions p[0,i]
         if A[0, i] > 0.5:
             Y_prediction[0, i] = 1
         else:
             Y_prediction[0, i] = 0
-
-    # Using no loop for better efficieny
-    # Y_prediction[A > 0.5] = 1
+    */
+    //# Using no loop for better efficieny
+    //# Y_prediction[A > 0.5] = 1
+    // Iterate over the elements of 'a' and assign values to 'y_prediction'
+    for ((i, j), value) in A.indexed_iter() {
+        if *value > 0.5 {
+            Y_prediction[(i, j)] = 1.0;
+        }
+    }
 
     Y_prediction
 }
 
 pub fn model(
-    X_train,
-    Y_train,
-    X_test,
-    Y_test,
-    num_iterations=2000,
-    learning_rate=0.5,
-    print_cost=False,
-) -> {
-    """
+    X_train: &Array2<f32>,
+    Y_train: &Array2<f32>,
+    X_test: &Array2<f32>,
+    Y_test: &Array2<f32>,
+    num_iterations: i32,
+    learning_rate: f32,
+    print_cost: bool,
+) -> (
+    Vec<f32>,
+    Array2<f32>,
+    Array2<f32>,
+    Array2<f32>,
+    f32,
+    f32,
+    i32,
+) {
+    /*
     Builds the logistic regression model by calling the function you've implemented previously
 
     Arguments:
@@ -205,8 +261,9 @@ pub fn model(
 
     Returns:
     d -- dictionary containing information about the model.
-    """
+    */
 
+    /*
     # initialize parameters with zeros
     # w, b = ...
 
@@ -220,17 +277,37 @@ pub fn model(
     # Predict test/train set examples
     # Y_prediction_test = ...
     # Y_prediction_train = ...
+    */
 
-    w, b = initialize_with_zeros(X_train.shape[0])
+    let (w, b) = initialize_with_zeros(X_train.shape()[0]);
+    // w, b = initialize_with_zeros(X_train.shape[0])
+
+    /*
     params, grads, costs = optimize(
         w, b, X_train, Y_train, num_iterations, learning_rate, print_cost
     )
-    w = params["w"]
-    b = params["b"]
-    Y_prediction_test = predict(w, b, X_test)
-    Y_prediction_train = predict(w, b, X_train)
+    */
+    let (w, b, dw, db, costs) = optimize(
+        &w,
+        b,
+        &X_train,
+        &Y_train,
+        num_iterations,
+        learning_rate,
+        print_cost,
+    );
 
-    # Print train/test Errors
+    // w = params["w"]
+    // b = params["b"]
+
+    // Y_prediction_test = predict(w, b, X_test)
+    // Y_prediction_train = predict(w, b, X_train)
+
+    let Y_prediction_test = predict(&w, b, &X_test);
+    let Y_prediction_train = predict(&w, b, &X_train);
+
+    // # Print train/test Errors
+    /*
     if print_cost:
         print(
             "train accuracy: {} %".format(
@@ -242,7 +319,19 @@ pub fn model(
                 100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100
             )
         )
+        */
+    if print_cost {
+        println!(
+            "train accuracy: {:?}",
+            100.0 - ((&Y_prediction_train - Y_train).abs()).mean().unwrap() * 100.0
+        );
+        println!(
+            "test accuracy: {:?}",
+            100.0 - ((&Y_prediction_test - Y_test).abs()).mean().unwrap() * 100.0
+        );
+    }
 
+    /*
     d = {
         "costs": costs,
         "Y_prediction_test": Y_prediction_test,
@@ -251,8 +340,15 @@ pub fn model(
         "b": b,
         "learning_rate": learning_rate,
         "num_iterations": num_iterations,
-    }
+    } */
 
-    d
+    (
+        costs,
+        Y_prediction_test,
+        Y_prediction_train,
+        w,
+        b,
+        learning_rate,
+        num_iterations,
+    )
 }
-*/

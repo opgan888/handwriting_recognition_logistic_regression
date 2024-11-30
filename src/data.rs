@@ -229,5 +229,4 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         let (x, y, z) = dim.into_tuple(); // Extract dimensions as tuple
         */
     */
-
 }
