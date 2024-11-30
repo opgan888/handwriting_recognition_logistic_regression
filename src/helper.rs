@@ -287,11 +287,11 @@ pub fn model(
         w, b, X_train, Y_train, num_iterations, learning_rate, print_cost
     )
     */
-    let (w, b, dw, db, costs) = optimize(
+    let (w, b, _dw, _db, costs) = optimize(
         &w,
         b,
-        &X_train,
-        &Y_train,
+        X_train,
+        Y_train,
         num_iterations,
         learning_rate,
         print_cost,
@@ -303,8 +303,8 @@ pub fn model(
     // Y_prediction_test = predict(w, b, X_test)
     // Y_prediction_train = predict(w, b, X_train)
 
-    let Y_prediction_test = predict(&w, b, &X_test);
-    let Y_prediction_train = predict(&w, b, &X_train);
+    let Y_prediction_test = predict(&w, b, X_test);
+    let Y_prediction_train = predict(&w, b, X_train);
 
     // # Print train/test Errors
     /*

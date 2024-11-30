@@ -6,10 +6,73 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
     println!("Logistic Regression classification of handwriting digits");
-    let string_number = &args[2];
-    println!("Recognise  {}!", string_number);
+
+    // injest DIGIT, modeling DIGIT, predict_test_example INDEX, predict_unseen_example IMAGE_FILE
+    let cmd: &str = &args[2]; // injest, modeling, predict_test_example, predict_unseen_example commands
+    //let s_string: String = s.to_owned();
+    let param: &str = &args[3]; // a string rep digit, index, file name
+    match cmd {
+        "injest" => injest_cmd(param),
+        "modeling" => model_cmd(param),
+        "predict_test_example" => predict_test_example_cmd(param),
+        "predict_unseen_example" => predict_unseen_example_cmd(param),
+        _ => println!(
+            "Enter a command: injest, modeling, predict_test_example, predict_unseen_example"
+        ),
+    }
+}
+
+fn predict_test_example_cmd(string_number: &str) {
+    println!(
+        "Data preprocessed for recognising a digit of {}!",
+        string_number
+    );
     let digit: f32 = string_number.parse().unwrap();
-    let (_train_x, _train_y, _test_x, _test_y) = injest(digit); //9.0);
+    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+}
+
+fn predict_unseen_example_cmd(string_number: &str) {
+    println!(
+        "Data preprocessed for recognising a digit of {}!",
+        string_number
+    );
+    let digit: f32 = string_number.parse().unwrap();
+    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+}
+
+fn injest_cmd(string_number: &str) {
+    println!(
+        "Data preprocessed for recognising a digit of {}!",
+        string_number
+    );
+    let digit: f32 = string_number.parse().unwrap();
+    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+}
+
+fn model_cmd(string_number: &str) {
+    println!("Model trained to classify a digit of {}!", string_number);
+    let digit: f32 = string_number.parse().unwrap();
+    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+    /*
+    model
+    (
+        costs,
+        Y_prediction_test,
+        Y_prediction_train,
+        w,
+        b,
+        learning_rate,
+        num_iterations,
+    ) = model(
+        &X_train,
+        &Y_train,
+        &X_test,
+        &Y_test,
+        num_iterations,
+        learning_rate,
+        print_cost,
+    );
+    */
 }
 
 /*
