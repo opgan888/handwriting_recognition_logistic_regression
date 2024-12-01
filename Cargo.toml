@@ -6,9 +6,12 @@ edition = "2021"
 [dependencies]
 env_logger = "0.11.5"
 fern = "0.7.0"
+io = "0.0.2"
 itertools = "0.13.0"
 log = "0.4.22"
 mnist = "0.6.0"
 ndarray = "0.16.1"
+ndarray-npy = "0.9.1"
+npy = "0.4.0"
 statrs = "0.17.1"
 

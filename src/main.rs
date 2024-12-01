@@ -5,8 +5,15 @@ use handwritingrecognition::helper::model;
 use handwritingrecognition::helper::sigmoid;
 use log::LevelFilter;
 use log::{debug, info};
-use ndarray::Array2;
+use ndarray::{arr2, Array2};
 use std::env;
+use npy::NpyData;
+use ndarray_npy::read_npy;
+use ndarray_npy::write_npy;
+use ndarray_npy::WriteNpyExt;
+
+use ndarray::ErrorKind;
+use std::error::Error;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize the logger
@@ -37,7 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Ok(())
         }
         "modeling" => {
-            model_cmd(param);
+            let _ = model_cmd(param);
             Ok(())
         }
         "predict_test_example" => {
@@ -57,13 +64,40 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 }
 
-fn predict_test_example_cmd(string_number: &str) {
+fn predict_test_example_cmd(string_number: &str) -> Result<(), Box<dyn std::error::Error>> {
     println!(
-        "Data preprocessed for recognising a digit of {}!",
+        "Predict a digit from index of test dateset {}!",
         string_number
     );
+    
     let digit: f32 = string_number.parse().unwrap();
-    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+    
+    //let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+
+    let npy_data: NpyData<T> = read_npy("model_bias.npy")?; //?
+    let array: Array2<f32> = npy_data.into_array2()?; //? removed
+    // println!("Saved bias {}", npy_data);
+
+    Ok(())
+
+    /*
+    let _ = write_npy("model_weights.npy", &_w);
+    let _ = write_npy("model_bias.npy", &b_array);
+    let _ = write_npy("test_set_x.npy", &_test_x);
+    let _ = write_npy("test_set_y.npy", &_y_prediction_test);
+    */
+
+    /*
+    # injest test datasets from the NPY file
+    test_set_x = np.load("test_set_x.npy")
+    test_set_y = np.load("test_set_y.npy")
+
+    # Load trained model from the NPY file
+    w = np.load("model_weights.npy")
+    b = np.load("model_bias.npy")[
+        0
+    ]  # convert a Python array with a single element to a scalar
+    */
 }
 
 fn predict_unseen_example_cmd(string_number: &str) {
@@ -84,11 +118,11 @@ fn injest_cmd(string_number: &str) {
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
 }
 
-fn model_cmd(string_number: &str) {
+fn model_cmd(string_number: &str) -> std::io::Result<()> {
     println!("Model trained to classify a digit of {}!", string_number);
     let digit: f32 = string_number.parse().unwrap();
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
-    let _num_iterations = 101;
+    let _num_iterations = 5;
     let _learning_rate = 0.005;
     let print_cost = true;
     let _costs: Vec<f32> = Vec::new(); // Create an empty vector
@@ -106,47 +140,25 @@ fn model_cmd(string_number: &str) {
             _learning_rate,
             print_cost,
         );
-    // save model to a file
-    //click.echo("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
-    println!("Cost is {:?}!", costs);
-    //log("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
+
+    // println!("Costs are {:?}!", costs);
+
+    // save models and test datasets to a file: model_bias.npy model_weights.npy test_set_x.npy test_set_y.npy
+    let b_array = Array2::from_shape_vec((1, 1), vec![_b]).unwrap();
+    let _ = write_npy("model_weights.npy", &_w);
+    let _ = write_npy("model_bias.npy", &b_array);
+    let _ = write_npy("test_set_x.npy", &_test_x);
+    let _ = write_npy("test_set_y.npy", &_y_prediction_test);
+
+    info!("main model_cmd: b {:?}.", b_array);
+    info!("main model_cmd: w {:?}.", _w);
+    info!("main model_cmd: cost {:?}.", costs);
+
+    Ok(())
 }
 
+
 /*
-
-@cli.command()
-@click.argument("digit", type=int)
-def modeling(digit):
-    """train NN model weights and bias to classify a given handwriting digit supplied in the argument"""
-
-    # injest datasets
-    train_set_x, train_set_y, test_set_x, test_set_y = myLib.data.injest(digit)
-
-    # EDA
-
-    # train model
-    logistic_regression_model = myLib.helper.model(
-        train_set_x,
-        train_set_y,
-        test_set_x,
-        test_set_y,
-        num_iterations=100,
-        learning_rate=0.005,
-        print_cost=True,
-    )
-
-    # save model to an NPY file
-    np.save("model_weights.npy", logistic_regression_model["w"])
-    np.save("model_bias.npy", np.array([logistic_regression_model["b"]]))
-
-    # save datasets to an NPY file
-    np.save("test_set_x.npy", test_set_x)
-    np.save("test_set_y.npy", test_set_y)
-
-    click.echo("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
-    log("Cost = " + str(np.squeeze(logistic_regression_model["costs"])))
-
-
 @cli.command()
 @click.argument("example", type=int)
 def predict_test(example):

@@ -1,5 +1,5 @@
-use ndarray::Array2;
 use log::{debug, info};
+use ndarray::Array2;
 use std::f32::consts::E;
 
 pub fn element_log(a: &Array2<f32>) -> Array2<f32> {
@@ -168,8 +168,8 @@ pub fn optimize(
         (dw, db, cost) = propagate(&w_owned, b_owned, x, y);
         // # YOUR CODE ENDS HERE
 
-        debug!("optimize debug message: db {:?}.", db);
-        debug!("optimize debug message: cost {:?}.", cost);
+        info!("optimize debug message: db {:?}.", db);
+        info!("optimize debug message: cost {:?}.", cost);
 
         /*
         # Retrieve derivatives from grads
@@ -183,12 +183,13 @@ pub fn optimize(
         */
 
         w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
-        b_owned -= learning_rate * b;
+        b_owned = b_owned - learning_rate * db;
         //w = &w_owned;
         //b = b_owned;
 
-        // Record the costs
-        if i % 100 == 0 {
+        // Record the costs print interval
+        let print_interval = 1;
+        if i % print_interval == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
             costs.push(cost);
