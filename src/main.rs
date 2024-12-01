@@ -14,6 +14,13 @@ use ndarray_npy::WriteNpyExt;
 
 use ndarray::ErrorKind;
 use std::error::Error;
+use std::num::ParseFloatError;
+use ndarray::ShapeError;
+
+enum Errors {
+    ShapeError(ShapeError),
+    ParseFloatError(ParseFloatError),
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize the logger
@@ -69,13 +76,45 @@ fn predict_test_example_cmd(string_number: &str) -> Result<(), Box<dyn std::erro
         "Predict a digit from index of test dateset {}!",
         string_number
     );
-    
+    /*
+
+            fn parse_and_process(string_number: &str) -> Result<(), ()> {
+            let num: i32 = string_number.parse()?;
+            // Process the parsed number
+            println!("Parsed number: {}", num);
+            Ok(())
+        }
+
+    */
     let digit: f32 = string_number.parse().unwrap();
     
     //let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
 
-    let npy_data: NpyData<T> = read_npy("model_bias.npy")?; //?
-    let array: Array2<f32> = npy_data.into_array2()?; //? removed
+    // let npy_data: NpyData<T> = read_npy("model_bias.npy")?; //?
+    // let array: Array2<f32> = npy_data.into_array2()?; //? removed
+
+    /*
+
+                fn divide(x: i32, y: i32) -> Result<i32, String> {
+                if y == 0 {
+                    return Err("Division by zero".to_string());
+                }
+                Ok(x / y)
+            }
+                /// 
+            let result = divide(10, 2);
+            match result {
+                Ok(value) => println!("Result: {}", value),
+                Err(err)   
+        => println!("Error: {}", err),
+    }
+    */
+    /*
+    let file = File::open(filename)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    Ok(contents)
+    */
     // println!("Saved bias {}", npy_data);
 
     Ok(())
@@ -118,9 +157,22 @@ fn injest_cmd(string_number: &str) {
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
 }
 
-fn model_cmd(string_number: &str) -> std::io::Result<()> {
+//fn model_cmd(string_number: &str) -> std::io::Result<()> {
+// fn model_cmd(string_number: &str) -> Result<(), ()> { T, E
+fn model_cmd(string_number: &str) -> Result<(), Errors> { 
     println!("Model trained to classify a digit of {}!", string_number);
-    let digit: f32 = string_number.parse().unwrap();
+    // let digit: f32 = string_number.parse().unwrap()?;
+    // let digit: f32 = string_number.parse()?;
+    
+    let digit: f32 = parse_digit(string_number)?;
+
+    /*
+    let digit_result: f32 = match string_number.parse(){
+        Ok(digit) => digit,
+        Err(e) => return Err(e),
+    };
+    */
+
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
     let _num_iterations = 5;
     let _learning_rate = 0.005;
@@ -144,7 +196,23 @@ fn model_cmd(string_number: &str) -> std::io::Result<()> {
     // println!("Costs are {:?}!", costs);
 
     // save models and test datasets to a file: model_bias.npy model_weights.npy test_set_x.npy test_set_y.npy
-    let b_array = Array2::from_shape_vec((1, 1), vec![_b]).unwrap();
+    // let b_array = Array2::from_shape_vec((1, 1), vec![_b]).unwrap();
+    // let b_array = Array2::from_shape_vec((1, 1), vec![_b])?; 
+
+    let b_array = create_array(_b)?;
+
+    /*
+    let b_array = match Array2::from_shape_vec((1, 1), vec![_b]) {
+        Ok(array) => array,
+        Err(err) => Err(err),
+        /*
+        Err(err) => {
+            // Handle the error here, e.g., log an error message or return a default value
+            panic!("Error creating array: {}", err);
+        } */
+    };
+    */
+
     let _ = write_npy("model_weights.npy", &_w);
     let _ = write_npy("model_bias.npy", &b_array);
     let _ = write_npy("test_set_x.npy", &_test_x);
@@ -157,7 +225,28 @@ fn model_cmd(string_number: &str) -> std::io::Result<()> {
     Ok(())
 }
 
+fn create_array(b: f32) -> Result<Array2<f32>, Errors> {
+    let result = Array2::from_shape_vec((1, 1), vec![b]).map_err(Errors::ShapeError);
+    result
+}
 
+fn parse_digit(string_number: &str) -> Result<f32, Errors> {
+    let digit_result: Result<f32, ParseFloatError> = string_number.parse();
+    match digit_result {
+        Ok(digit) => Ok(digit),
+        Err(e) => Err(Errors::ParseFloatError(e)),
+    }
+}
+/*
+let result = create_array(b);
+match result {
+    Ok(()) => println!("Array created successfully"),
+    Err(err) => match err {
+        MyError::ShapeError(e) => eprintln!("Shape error: {}", e),
+        MyError::ParseFloatError(e) => eprintln!("Parse float error: {}", e),
+    }
+}
+*/
 /*
 @cli.command()
 @click.argument("example", type=int)
