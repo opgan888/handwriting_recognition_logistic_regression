@@ -5,6 +5,14 @@ use ndarray::{Array2, Array3}; //, s}; //, Zip};
 // arr: &[T] represents a slice, which is a reference to a contiguous sequence of elements of type T (type T is a declaration of a type alias)
 // target: &T is a function parameter declaration that signifies a reference to a value of type T
 // usize is unsigned integer type
+/*
+fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
+    arr.iter()
+        .enumerate()
+        .filter(|(_, x)| **x == *target)
+        .map(|(i, _)| i)
+        .collect()
+} */
 fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
     arr.iter()
         .enumerate()
@@ -12,7 +20,6 @@ fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
         .map(|(i, _)| i)
         .collect()
 }
-
 // Loading data for handwriting pub fn injest(digit: i32) {
 
 pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>) {
@@ -71,7 +78,7 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     //    test_set_y_binary = np.zeros((1, test_set_y.size))
 
     // let train_labels_binary: Array2<i32> = Array2::zeros((60000, 1));
-    let mut train_labels_binary: Array2<i32> = Array2::zeros((1, 60000));
+    let mut train_labels_binary: Array2<f32> = Array2::zeros((1, 60000));
     //assert_eq!(train_set_y_binary.shape(), &[60000, 1]);
     assert_eq!(train_labels_binary.shape(), &[1, 60000]);
 
@@ -79,7 +86,7 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     let target_number_f = &digit; // &6_f32; // explicitly specifies the type of the number as a 32-bit floating-point number
     println!("Target number to be classified {}: ", target_number_f);
 
-    // find the index of elements in train_set_y equals target_number_f
+    // find the index of elements in train_labels equals target_number_f
     let first_column: Vec<f32> = train_labels.column(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_train_labels = find_indices_filter(&first_column, target_number_f); // search Vector of  Vec<f32>
                                                                                    //println!("Found {} at index {:?} in first_column", target_number_f, index3_col.len());
@@ -92,19 +99,19 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         //println!("index {:?} value {:?}", i, x);
         //let index: usize = {*x};
         index = *x;
-        train_labels_binary[[0, index]] = 1
+        train_labels_binary[[0, index]] = 1.0
     });
 
     //Searching for a Value in a 2D Array
-    let target_value: i32 = 1;
+    let target_value: f32 = 1.0;
     let mut found = train_labels_binary.iter().any(|&x| x == target_value);
     if found {
         //println!("Found the target value: {}", target_value);
     } else {
         //println!("Target value not found.");
     }
-    // find the index of elements in train_set_y equals target_number_f
-    let first_row: Vec<i32> = train_labels_binary.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    // find the index of elements in train_labels_binary equals target_number_f
+    let first_row: Vec<f32> = train_labels_binary.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_train_labels_binary = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     println!(
         "Found {} of {:?} times in train_labels",
@@ -115,13 +122,13 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
 
     //
     // let test_labels_binary: Array2<i32> = Array2::zeros((10000, 1));
-    let mut test_labels_binary: Array2<i32> = Array2::zeros((1, 10000));
+    let mut test_labels_binary: Array2<f32> = Array2::zeros((1, 10000));
     //assert_eq!(train_set_y_binary.shape(), &[60000, 1]);
     assert_eq!(test_labels_binary.shape(), &[1, 10000]);
 
     // classifying one digit at one time
     // let target_number_f = &3_f32; // explicitly specifies the type of the number as a 32-bit floating-point number
-    // find the index of elements in train_set_y equals target_number_f
+    // find the index of elements in test_labels equals target_number_f
     let first_column_test: Vec<f32> = test_labels.column(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_test_labels = find_indices_filter(&first_column_test, target_number_f); // search Vector of  Vec<f32>
                                                                                        //println!("Found {} at index {:?} in first_column", target_number_f, index3_col_test.len());
@@ -134,7 +141,7 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         //println!("index {:?} value {:?}", i, x);
         //let index: usize = {*x};
         index = *x;
-        test_labels_binary[[0, index]] = 1
+        test_labels_binary[[0, index]] = 1.0
     });
 
     //Searching for a Value in a 2D Array
@@ -145,8 +152,8 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     } else {
         //println!("Target value not found.");
     }
-    // find the index of elements in train_set_y equals target_number_f
-    let first_row_test: Vec<i32> = test_labels_binary.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    // find the index of elements in test_labels_binary equals target_number_f
+    let first_row_test: Vec<f32> = test_labels_binary.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_test_labels_binary = find_indices_filter(&first_row_test, &target_value); // search Vector of  Vec<f32>
     println!(
         "Found {} of {:?} times in test_labels",
@@ -177,6 +184,9 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
 
     // Reshape the ArrayView1 into a 2D array
     let _shape = (1, m_train); // Reshape into a (1,m) matrix
+
+    // train_labels_colvector contains 0 to 9 labels whereas train_labels_binary contains 0 or 1
+    // train_labels_binary and test_labels_binary are already column vectors
     let train_labels_colvector = train_labels.into_shape_with_order((1, 60_000)).unwrap();
     println!(
         "Flattened train_labels shape: {:?}",
@@ -215,13 +225,20 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     //return train_set_x, train_set_y, test_set_x, test_set_y
     let owned_flattened_train_data = flattened_train_data.to_owned(); // OwnedRepr: Represents an array that owns its data. You can modify the elements of this array directly.
     let owned_flattened_test_data = flattened_test_data.to_owned();
+    /*
     (
         owned_flattened_train_data,
         train_labels_colvector,
         owned_flattened_test_data,
         test_labels_colvector,
     )
-
+    */
+    (
+        owned_flattened_train_data,
+        train_labels_binary,
+        owned_flattened_test_data,
+        test_labels_binary,
+    )
     /*
         // Access the dimension information
         /*

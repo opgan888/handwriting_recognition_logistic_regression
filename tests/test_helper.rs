@@ -1,17 +1,67 @@
+use handwritingrecognition::helper::element_log;
+use handwritingrecognition::helper::element_product;
+use handwritingrecognition::helper::element_sum;
 use handwritingrecognition::helper::initialize_with_zeros;
+use handwritingrecognition::helper::matrixmultiply;
 use handwritingrecognition::helper::model;
 use handwritingrecognition::helper::optimize;
 use handwritingrecognition::helper::predict;
 use handwritingrecognition::helper::propagate;
 use handwritingrecognition::helper::sigmoid;
 
-use ndarray::{Array2};
+use ndarray::Array2;
+
+#[test]
+fn test_element_log() {
+    let a = Array2::from_shape_vec((2, 1), vec![1.0, 0.5]).unwrap();
+    let result = element_log(&a);
+    let expected = Array2::from_shape_vec((2, 1), vec![0.0, -0.30103]).unwrap();
+
+    assert_eq!(result, expected, "test_element_log algo failed");
+}
+
+#[test]
+fn test_element_product() {
+    let y = Array2::from_shape_vec((2, 1), vec![1.0, 2.0]).unwrap();
+    let a = Array2::from_shape_vec((2, 1), vec![5.0, 5.0]).unwrap();
+    let result = element_product(&a, &y);
+    let expected = Array2::from_shape_vec((2, 1), vec![5.0, 10.0]).unwrap();
+
+    assert_eq!(result, expected, "test_element_product algo failed");
+}
+
+#[test]
+fn test_element_sum() {
+    let y = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+    let a = Array2::from_shape_vec((2, 1), vec![5.0, 5.0]).unwrap();
+    let result = element_sum(&a, &y);
+    let expected = 10.0;
+
+    assert_eq!(result, expected, "test_element_sum algo failed");
+}
+
+#[test]
+fn test_matrixmultiply() {
+    let w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+    let w = Array2::from_shape_vec((2, 1), vec![5.0, 5.0]).unwrap();
+    let b = 5.0;
+
+    let x = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap();
+    let result = matrixmultiply(&w, b, &x);
+    let result = sigmoid(result);
+    let expected = Array2::from_shape_vec((1, 1), vec![0.99999964]).unwrap();
+
+    assert_eq!(result, expected, "test_matrixmultiply algo failed");
+}
 
 #[test]
 fn test_sigmoid() {
-    let input = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+    let input = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap(); // test 0.0
+    let input = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap(); // test 1.0
     let result = sigmoid(input);
     let expected = Array2::from_shape_vec((2, 1), vec![0.5, 0.5]).unwrap();
+    let expected = Array2::from_shape_vec((2, 1), vec![0.7310586, 0.7310586]).unwrap();
+
     assert_eq!(result, expected, "sigmoid computation algo failed");
 }
 
@@ -62,7 +112,11 @@ fn test_optimize() {
     let learning_rate = 0.005;
     let print_cost = true;
 
-    let (w, b, dw, db, costs) = optimize(&w, b, &X, &Y, num_iterations, learning_rate, print_cost);
+    let Ok((w, b, dw, db, costs)) =
+        optimize(&w, b, &X, &Y, num_iterations, learning_rate, print_cost)
+    else {
+        todo!()
+    };
 
     let result = &dw;
     let expected = Array2::from_shape_vec((2, 1), vec![-0.5, -0.5]).unwrap();

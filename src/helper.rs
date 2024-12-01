@@ -1,9 +1,25 @@
 use ndarray::Array2;
-//use std::f32::consts::LOG10_E;
-//use std::collections::HashMap;
+use log::{debug, info};
 use std::f32::consts::E;
-use log::{debug, error, info, warn};
 
+pub fn element_log(a: &Array2<f32>) -> Array2<f32> {
+    let result: Array2<f32> = a.mapv(|e| e.log10());
+    result
+}
+
+pub fn element_product(a: &Array2<f32>, y: &Array2<f32>) -> Array2<f32> {
+    let result: Array2<f32> = y * a;
+    result
+}
+
+pub fn element_sum(a: &Array2<f32>, _y: &Array2<f32>) -> f32 {
+    let result: f32 = a.iter().sum();
+    result
+}
+
+pub fn matrixmultiply(w: &Array2<f32>, b: f32, x: &Array2<f32>) -> Array2<f32> {
+    (w.t()).dot(x) + b
+}
 
 //pub fn sigmoid(z: f32) -> f32 {
 pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
@@ -42,8 +58,8 @@ pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
 pub fn propagate(
     w: &Array2<f32>,
     b: f32,
-    X: &Array2<f32>,
-    Y: &Array2<f32>,
+    x: &Array2<f32>,
+    y: &Array2<f32>,
 ) -> (Array2<f32>, f32, f32) {
     /*
     Implement the cost function and its gradient for the propagation explained above
@@ -65,7 +81,7 @@ pub fn propagate(
     */
 
     // m = X.shape[1] // (num_px * num_px * 3, number of examples)
-    let m = X.shape()[1];
+    let m: f32 = x.shape()[1] as f32; // cast a `usize` to an `f32`
 
     /*
     # FORWARD PROPAGATION (FROM X TO COST)
@@ -75,30 +91,21 @@ pub fn propagate(
     */
 
     //let A = sigmoid(np.dot(np.transpose(w), X) + b)
-    let A = sigmoid((w.t()).dot(X) + b);
+    let a = sigmoid((w.t()).dot(x) + b);
 
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
-    let cost = (-1.0 / (m as f32))
-        * (Y * &A.mapv(|x| x.log10()) + (1.0 - Y) * (1.0 - &A).mapv(|x| x.log10()))
+    let cost = (-1.0 / m)
+        * ((y * (&a.mapv(|e| e.log10())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.log10())))
             .iter()
-            .sum::<f32>();
+            .sum::<f32>());
 
     //# BACKWARD PROPAGATION (TO FIND GRAD)
 
     // dw = (1 / m) * np.dot(X, np.transpose(A - Y))
-    let dw = (1.0 / m as f32) * X.dot(&((&A - Y).t())); // // Negate each element
+    let dw = (1.0 / m) * x.dot(&((&a - y).t())); // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
-    let db = (1.0 / m as f32) * (&A - Y).iter().sum::<f32>();
-
-    debug!("propagate debug message: w {:?}.", &w);
-    debug!("propagate debug message: b {:?}.", b);
-
-    debug!("propagate debug message: A {:?}.", &A);
-    debug!("propagate debug message: dw {:?}.", &dw);
-    debug!("propagate debug message: db {:?}.", db);
-    debug!("propagate debug message: cost {:?}.", cost);
-    debug!("propagate debug message: m {:?}.", m);
+    let db = (1.0 / m) * (&a - y).iter().sum::<f32>();
 
     (dw, db, cost)
 }
@@ -106,14 +113,13 @@ pub fn propagate(
 pub fn optimize(
     w: &Array2<f32>,
     b: f32,
-    X: &Array2<f32>,
-    Y: &Array2<f32>,
+    x: &Array2<f32>,
+    y: &Array2<f32>,
     num_iterations: i32,
     learning_rate: f32,
     print_cost: bool,
-) ->  Result<(Array2<f32>, f32, Array2<f32>, f32, Vec<f32>), Box<dyn std::error::Error>>  {
-    
-   // (Array2<f32>, f32, Array2<f32>, f32, Vec<f32>) 
+) -> Result<(Array2<f32>, f32, Array2<f32>, f32, Vec<f32>), Box<dyn std::error::Error>> {
+    // (Array2<f32>, f32, Array2<f32>, f32, Vec<f32>)
     /*
     This function optimizes w and b by running a gradient descent algorithm
 
@@ -149,7 +155,7 @@ pub fn optimize(
     // costs = []
     let mut costs = Vec::new(); // Create an empty vector
 
-    let mut dw: Array2<f32> = Array2::zeros((X.shape()[0], 1)); // (row (features), col (examples)) refers to (num_px * num_px * 3, number of examples)
+    let mut dw: Array2<f32> = Array2::zeros((x.shape()[0], 1)); // (row (features), col (examples)) refers to (num_px * num_px * 3, number of examples)
     let mut db = 0.0;
     let mut cost = 0.0;
 
@@ -159,9 +165,10 @@ pub fn optimize(
         // grads, cost = ...
         // grads, cost = propagate(w, b, X, Y)
         // (dw, db, cost) = propagate(w, b, X, Y);
-        (dw, db, cost) = propagate(&w_owned, b_owned, X, Y);
+        (dw, db, cost) = propagate(&w_owned, b_owned, x, y);
         // # YOUR CODE ENDS HERE
 
+        debug!("optimize debug message: db {:?}.", db);
         debug!("optimize debug message: cost {:?}.", cost);
 
         /*
@@ -181,7 +188,7 @@ pub fn optimize(
         //b = b_owned;
 
         // Record the costs
-        if i % 10 == 0 {
+        if i % 100 == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
             costs.push(cost);
@@ -201,7 +208,7 @@ pub fn optimize(
     Ok((w_owned, b_owned, dw, db, costs))
 }
 
-pub fn predict(w: &Array2<f32>, b: f32, X: &Array2<f32>) -> Array2<f32> {
+pub fn predict(w: &Array2<f32>, b: f32, x: &Array2<f32>) -> Array2<f32> {
     /*
     Predict whether the label is 0 or 1 using learned logistic regression parameters (w, b)
 
@@ -215,19 +222,19 @@ pub fn predict(w: &Array2<f32>, b: f32, X: &Array2<f32>) -> Array2<f32> {
     */
 
     // m = X.shape[1]
-    let m = X.shape()[1];
+    let m = x.shape()[1];
 
     // Y_prediction = np.zeros((1, m))
-    let mut Y_prediction: Array2<f32> = Array2::zeros((1, m));
+    let mut y_prediction: Array2<f32> = Array2::zeros((1, m));
 
     // ensure column vector
     // w = w.reshape(X.shape[0], 1)
-    assert_eq!(w.shape(), &[X.shape()[0], 1]);
-    w.to_shape((X.shape()[0], 1)).unwrap();
+    assert_eq!(w.shape(), &[x.shape()[0], 1]);
+    w.to_shape((x.shape()[0], 1)).unwrap();
 
     // # Compute vector "A" predicting the probabilities of a cat being present in the picture
     // A = sigmoid(np.dot(np.transpose(w), X) + b)
-    let A = sigmoid((w.t()).dot(X) + b);
+    let a = sigmoid((w.t()).dot(x) + b);
 
     // # Using loop
     /*
@@ -241,20 +248,20 @@ pub fn predict(w: &Array2<f32>, b: f32, X: &Array2<f32>) -> Array2<f32> {
     //# Using no loop for better efficieny
     //# Y_prediction[A > 0.5] = 1
     // Iterate over the elements of 'a' and assign values to 'y_prediction'
-    for ((i, j), value) in A.indexed_iter() {
+    for ((i, j), value) in a.indexed_iter() {
         if *value > 0.5 {
-            Y_prediction[(i, j)] = 1.0;
+            y_prediction[(i, j)] = 1.0;
         }
     }
 
-    Y_prediction
+    y_prediction
 }
 
 pub fn model(
-    X_train: &Array2<f32>,
-    Y_train: &Array2<f32>,
-    X_test: &Array2<f32>,
-    Y_test: &Array2<f32>,
+    x_train: &Array2<f32>,
+    y_train: &Array2<f32>,
+    x_test: &Array2<f32>,
+    y_test: &Array2<f32>,
     num_iterations: i32,
     learning_rate: f32,
     print_cost: bool,
@@ -299,7 +306,7 @@ pub fn model(
     # Y_prediction_train = ...
     */
 
-    let (w, b) = initialize_with_zeros(X_train.shape()[0]);
+    let (w, b) = initialize_with_zeros(x_train.shape()[0]);
     // w, b = initialize_with_zeros(X_train.shape[0])
 
     /*
@@ -310,12 +317,14 @@ pub fn model(
     let Ok((w, b, _dw, _db, costs)) = optimize(
         &w,
         b,
-        X_train,
-        Y_train,
+        x_train,
+        y_train,
         num_iterations,
         learning_rate,
         print_cost,
-    )else { todo!()  };
+    ) else {
+        todo!()
+    };
     // println!("logging exception");
 
     // w = params["w"]
@@ -324,8 +333,8 @@ pub fn model(
     // Y_prediction_test = predict(w, b, X_test)
     // Y_prediction_train = predict(w, b, X_train)
 
-    let Y_prediction_test = predict(&w, b, X_test);
-    let Y_prediction_train = predict(&w, b, X_train);
+    let y_prediction_test = predict(&w, b, x_test);
+    let y_prediction_train = predict(&w, b, x_train);
 
     // # Print train/test Errors
     /*
@@ -344,11 +353,11 @@ pub fn model(
     if print_cost {
         println!(
             "train accuracy: {:?}",
-            100.0 - ((&Y_prediction_train - Y_train).abs()).mean().unwrap() * 100.0
+            100.0 - ((&y_prediction_train - y_train).abs()).mean().unwrap() * 100.0
         );
         println!(
             "test accuracy: {:?}",
-            100.0 - ((&Y_prediction_test - Y_test).abs()).mean().unwrap() * 100.0
+            100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
         );
     }
 
@@ -365,8 +374,8 @@ pub fn model(
 
     (
         costs,
-        Y_prediction_test,
-        Y_prediction_train,
+        y_prediction_test,
+        y_prediction_train,
         w,
         b,
         learning_rate,

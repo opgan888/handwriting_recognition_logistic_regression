@@ -1,477 +1,134 @@
 [INFO] [handwritingrecognition::helper] optimize starts
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.5, 0.5, 0.5, 0.5, 0.5, ..., 0.5, 0.5, 0.5, 0.5, 0.5]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-5.0980394e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.9539335.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.40263334.
 [DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.3009473.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
 [DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [2.5490198e-7],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.6820569, 0.6772844, 0.5942919, 0.61841774, 0.681059, ..., 0.6693069, 0.6746733, 0.649239, 0.6219636, 0.634263]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-5.0462208e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.785804.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -0.93422663.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -0.93422663.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [5.0721303e-7],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.8163376, 0.80941105, 0.6784466, 0.71982193, 0.8153977, ..., 0.7987418, 0.8060723, 0.7694129, 0.72559875, 0.7458336]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.998517e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.6619709.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -2.0692859.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -2.0692859.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [7.571389e-7],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.8998439, 0.89333254, 0.75018984, 0.80034864, 0.8993123, ..., 0.88384336, 0.8904865, 0.8551452, 0.80695, 0.829915]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.9553062e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.5824263.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -3.138121.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -3.138121.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [1.0049042e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9470575, 0.94205874, 0.80928665, 0.8609924, 0.94684035, ..., 0.93502027, 0.94002295, 0.91170555, 0.8673923, 0.8892309]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.9166043e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.5336883.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -4.167933.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -4.167933.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [1.2507344e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9724563, 0.969022, 0.8565577, 0.9048949, 0.97240025, ..., 0.96427995, 0.9676912, 0.94720566, 0.910522, 0.9292117]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.8823716e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.5040894.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -5.1754704.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -5.1754704.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [1.494853e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9857817, 0.9835723, 0.893427, 0.935758, 0.98578876, ..., 0.9805499, 0.98274523, 0.9688044, 0.94039685, 0.9553339]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.8525042e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.485855.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -6.170244.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -6.170244.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [1.7374782e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.99268746, 0.99132395, 0.9215885, 0.95699704, 0.9927114, ..., 0.98946196, 0.9908251, 0.9816976, 0.9606541, 0.97205025]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.8268008e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4744139.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -7.157705.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -7.157705.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [1.9788183e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.99624544, 0.9954269, 0.94274265, 0.9713945, 0.99626863, ..., 0.9943053, 0.9951321, 0.9893071, 0.9741866, 0.9826037]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.8049616e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4671354.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -8.140771.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -8.140771.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [2.2190663e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9980736, 0.99759173, 0.9584286, 0.98105294, 0.9980913, ..., 0.9969266, 0.99741983, 0.9937682, 0.9831351, 0.9892089]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.786619e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4625404.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -9.121165.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -9.121165.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [2.4583974e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9990119, 0.99873227, 0.9699462, 0.98748636, 0.9990239, ..., 0.9983424, 0.99863297, 0.9963731, 0.989012, 0.9933202]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7713642e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4595928.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost -10.1000805.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost -10.1000805.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [2.6969656e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9994931, 0.9993327, 0.9783412, 0.99175125, 0.9995009, ..., 0.9991062, 0.999276, 0.997891, 0.99285406, 0.99587053]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7587848e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4577057.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost inf.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost inf.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [2.9349048e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.99974006, 0.9996488, 0.9844274, 0.9945695, 0.9997447, ..., 0.99951816, 0.9996165, 0.9987741, 0.9953583, 0.9974492]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7484846e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4564717.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [3.1723291e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9998666, 0.99981517, 0.988822, 0.99642783, 0.99986947, ..., 0.9997402, 0.9997969, 0.99928766, 0.9969873, 0.99842525]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7401e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4556565.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [3.409334e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.9999316, 0.9999027, 0.9919863, 0.9976515, 0.99993324, ..., 0.9998599, 0.99989235, 0.99958605, 0.99804556, 0.99902797]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7333066e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4551227.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [3.6459994e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.99996495, 0.99994886, 0.99425983, 0.9984566, 0.9999659, ..., 0.99992454, 0.999943, 0.9997595, 0.9987325, 0.99940014]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.7278238e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4547632.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: w [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [3.8823905e-6],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: b 0.0.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: A [[0.999982, 0.99997306, 0.99589086, 0.99898595, 0.9999826, ..., 0.99995935, 0.99996984, 0.9998603, 0.99917823, 0.99962986]], shape=[1, 60000], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: dw [[0.0],
- [0.0],
- [0.0],
- [0.0],
- [0.0],
- ...,
- [-4.723413e-5],
- [0.0],
- [0.0],
- [0.0],
- [0.0]], shape=[784, 1], strides=[1, 784], layout=CFcf (0xf), const ndim=2.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: db -3.4545043.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: cost NaN.
-[DEBUG] [handwritingrecognition::helper] propagate debug message: m 60000.
-[DEBUG] [handwritingrecognition::helper] optimize debug message: cost NaN.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.3847353.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.28844726.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.28844726.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.3677454.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.2770163.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2770163.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.35164735.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.26662406.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.26662406.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.33643672.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.25717014.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.25717014.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.3220762.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.2485572.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2485572.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.30853423.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.24070415.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.24070415.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.29577625.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.23353074.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.23353074.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.28375557.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.22696804.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.22696804.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.27243364.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.22095609.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.22095609.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.2617666.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.21543634.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.21543634.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.25171548.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.21036291.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.21036291.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.24223469.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.20568709.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.20568709.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.23329307.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.20137352.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.20137352.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.22485179.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.19738592.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19738592.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.21687485.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.19369495.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19369495.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.20933457.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.19026995.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19026995.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.20219906.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.18708736.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.18708736.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.19544038.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.1841257.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.1841257.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.18903399.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.18136573.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.18136573.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.18295641.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.17878595.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.17878595.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.17718421.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.17637688.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.17637688.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: db 0.17170072.
+[DEBUG] [handwritingrecognition::helper] propagate debug message: cost 0.1741191.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.1741191.
+[INFO] [handwritingrecognition::helper] optimize starts
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.40263334.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3847353.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.28844726.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3677454.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2770163.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.35164735.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.26662406.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.33643672.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.25717014.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3220762.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2485572.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.30853423.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.24070415.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.29577625.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.23353074.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.28375557.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.22696804.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.27243364.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.22095609.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.2617666.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.21543634.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.25171548.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.21036291.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.24223469.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.20568709.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.23329307.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.20137352.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.22485179.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19738592.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.21687485.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19369495.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.20933457.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.19026995.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.20219906.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.18708736.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.19544038.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.1841257.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.18903399.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.18136573.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.18295641.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.17878595.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.17718421.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.17637688.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.17170072.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.1741191.
+[INFO] [handwritingrecognition::helper] optimize starts
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.40263334.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3847353.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.28844726.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3677454.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2770163.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.35164735.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.26662406.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.33643672.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.25717014.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.3220762.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.2485572.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.30853423.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.24070415.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: db 0.29577625.
+[DEBUG] [handwritingrecognition::helper] optimize debug message: cost 0.23353074.
