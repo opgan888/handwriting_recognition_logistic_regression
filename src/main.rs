@@ -262,6 +262,13 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
         first_row.len(),
         index3_w
     );
+    info!(
+        "Found {} of {:?} times out of total {:?} in w ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
 
     Ok(())
 }
