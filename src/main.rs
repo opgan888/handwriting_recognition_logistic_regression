@@ -1,33 +1,50 @@
 mod data;
 use fern::Dispatch;
+use handwritingrecognition::data::find_indices_filter;
 use handwritingrecognition::data::injest;
 use handwritingrecognition::helper::model;
 use handwritingrecognition::helper::sigmoid;
 use log::LevelFilter;
-use log::{debug, info};
+use log::{debug, error, info};
 use ndarray::{arr2, Array2};
-use std::env;
-use npy::NpyData;
 use ndarray_npy::read_npy;
 use ndarray_npy::write_npy;
+use ndarray_npy::ReadNpyExt;
 use ndarray_npy::WriteNpyExt;
+use npy::NpyData;
+use std::env;
 
 use ndarray::ErrorKind;
+use ndarray::ShapeError;
 use std::error::Error;
 use std::num::ParseFloatError;
-use ndarray::ShapeError;
 
+use ndarray_npy::ReadNpyError;
+use ndarray_npy::WriteNpyError;
+use std::convert::From;
+use std::fs::File;
+
+#[derive(Debug)]
 enum Errors {
     ShapeError(ShapeError),
     ParseFloatError(ParseFloatError),
+    ReadNpyError(ReadNpyError),
+    WriteNpyError(WriteNpyError),
+}
+
+impl From<ReadNpyError> for Errors {
+    fn from(err: ReadNpyError) -> Self {
+        Errors::ReadNpyError(err)
+    }
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize the logger
-    fern::Dispatch::new()
+    let _ = fern::Dispatch::new()
         .format(|out, message, record| {
             out.finish(format_args!(
-                "[{}] [{}] {}",
+                "{} [{}] [{}] {}",
+                chrono::Local::now().format("%d-%m-%Y %H:%M:%S"),
                 record.level(),
                 record.target(),
                 message
@@ -35,8 +52,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         .level(LevelFilter::Debug)
         .chain(fern::log_file("debugging.log")?)
-        .apply()
-        .unwrap();
+        .apply();
+    //.unwrap();
 
     let args: Vec<String> = env::args().collect();
     println!("Logistic Regression classification of handwriting digits");
@@ -47,68 +64,96 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let param: &str = &args[3]; // a string rep digit, index, file name
     match cmd {
         "injest" => {
-            injest_cmd(param);
+            let result = injest_cmd(param);
+            match result {
+                Ok(()) => info!("injest_cmd Ok"),
+                Err(error) => error!("Error processing in injest_cmd {:?} : {:?}", param, error), // Keep the message for logging
+            }
             Ok(())
         }
         "modeling" => {
-            let _ = model_cmd(param);
+            let result = model_cmd(param);
+            match result {
+                Ok(()) => info!("model_cmd Ok"),
+                Err(error) => error!("Error processing in model_cmd {:?} : {:?}", param, error), // Keep the message for logging
+            }
             Ok(())
         }
         "predict_test_example" => {
-            predict_test_example_cmd(param);
+            let result = predict_test_example_cmd(param);
+            match result {
+                Ok(()) => info!("predict_test_example_cmd Ok"),
+                Err(error) => error!(
+                    "Error processing in predict_test_example_cmd {:?} : {:?}",
+                    param, error
+                ), // Keep the message for logging
+            }
             Ok(())
         }
         "predict_unseen_example" => {
-            predict_unseen_example_cmd(param);
+            let _ = predict_unseen_example_cmd(param);
             Ok(())
         }
         _ => {
             println!(
-                "Enter a command: injest, modeling, predict_test_example, predict_unseen_example"
+                "Enter a correct command from these: injest, modeling, predict_test_example, predict_unseen_example"
             );
             Ok(())
         }
     }
 }
 
-fn predict_test_example_cmd(string_number: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn predict_test_example_cmd(string_number: &str) -> Result<(), Errors> {
+    /*
+        Predict a test example from test dataset
+    */
     println!(
-        "Predict a digit from index of test dateset {}!",
+        "Predict a digit from test dateset for given index of {}!",
         string_number
     );
+
+    let digit: f32 = parse_digit(string_number)?;
+
+    let w: Array2<f32> = read_npy("model_weights.npy")?;
+    let b: Array2<f32> = read_npy("model_bias.npy")?;
+    info!("predict_test_example_cmd: read_npy w {:?}", w.shape());
+    info!("predict_test_example_cmd: read_npy b shape {:?}", b.shape());
+    info!("predict_test_example_cmd: read_npy b {:?}", b);
+
+    // let w: Array2<f32> = read_npy("model_weights.npy").map_err(|_| Errors::ReadNpyError)?;
+    // let _ = read_npy("model_weights.npy").map_err(|_| Errors::ReadNpyError)?;
+
+    // let _ = read_npy("model_weights.npy")?.map_err(|err| Errors::from(err))?;
+
     /*
-
-            fn parse_and_process(string_number: &str) -> Result<(), ()> {
-            let num: i32 = string_number.parse()?;
-            // Process the parsed number
-            println!("Parsed number: {}", num);
-            Ok(())
-        }
-
+    let file = File::open("model_weights.npy");
+    let array: ArrayD<f32> = ndarray_npy::read(file);
+    let array2d = array.into_shape((2, 2)).unwrap();
     */
-    let digit: f32 = string_number.parse().unwrap();
-    
+    /*
+    let b_array: Array2<f32> = read_npy("model_bias.npy").map_err(|_| Errors::ReadNpyError);
+    let b = b_array[0];
+    */
+
+    /*
+        # injest test datasets from the NPY file
+        test_set_x = np.load("test_set_x.npy")
+        test_set_y = np.load("test_set_y.npy")
+
+        # Load trained model from the NPY file
+        w = np.load("model_weights.npy")
+        b = np.load("model_bias.npy")[
+            0
+        ]  # convert a Python array with a single element to a scalar
+    */
+
+    Ok(())
+
     //let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
 
     // let npy_data: NpyData<T> = read_npy("model_bias.npy")?; //?
     // let array: Array2<f32> = npy_data.into_array2()?; //? removed
 
-    /*
-
-                fn divide(x: i32, y: i32) -> Result<i32, String> {
-                if y == 0 {
-                    return Err("Division by zero".to_string());
-                }
-                Ok(x / y)
-            }
-                /// 
-            let result = divide(10, 2);
-            match result {
-                Ok(value) => println!("Result: {}", value),
-                Err(err)   
-        => println!("Error: {}", err),
-    }
-    */
     /*
     let file = File::open(filename)?;
     let mut contents = String::new();
@@ -116,8 +161,6 @@ fn predict_test_example_cmd(string_number: &str) -> Result<(), Box<dyn std::erro
     Ok(contents)
     */
     // println!("Saved bias {}", npy_data);
-
-    Ok(())
 
     /*
     let _ = write_npy("model_weights.npy", &_w);
@@ -139,49 +182,47 @@ fn predict_test_example_cmd(string_number: &str) -> Result<(), Box<dyn std::erro
     */
 }
 
-fn predict_unseen_example_cmd(string_number: &str) {
-    println!(
-        "Data preprocessed for recognising a digit of {}!",
-        string_number
-    );
-    let digit: f32 = string_number.parse().unwrap();
-    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+fn predict_unseen_example_cmd(string_number: &str) -> Result<(), Errors> {
+    println!("Predict digit from image file {}!", string_number);
+
+    Ok(())
 }
 
-fn injest_cmd(string_number: &str) {
+fn injest_cmd(string_number: &str) -> Result<(), Errors> {
     println!(
-        "Data preprocessed for recognising a digit of {}!",
+        "Preprocess datasets for recognising a given digit of {}!",
         string_number
     );
-    let digit: f32 = string_number.parse().unwrap();
-    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
-}
-
-//fn model_cmd(string_number: &str) -> std::io::Result<()> {
-// fn model_cmd(string_number: &str) -> Result<(), ()> { T, E
-fn model_cmd(string_number: &str) -> Result<(), Errors> { 
-    println!("Model trained to classify a digit of {}!", string_number);
-    // let digit: f32 = string_number.parse().unwrap()?;
-    // let digit: f32 = string_number.parse()?;
-    
+    // let digit: f32 = string_number.parse().unwrap();  // Avoid using unwrap, poor error handling
     let digit: f32 = parse_digit(string_number)?;
+    let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
+    Ok(())
+}
 
+fn model_cmd(string_number: &str) -> Result<(), Errors> {
     /*
-    let digit_result: f32 = match string_number.parse(){
-        Ok(digit) => digit,
-        Err(e) => return Err(e),
-    };
+        Train model and save to NYP files
     */
+
+    println!("Train model to classify a given digit {}!", string_number);
+
+    let digit: f32 = parse_digit(string_number)?;
 
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
     let _num_iterations = 5;
     let _learning_rate = 0.005;
     let print_cost = true;
     let _costs: Vec<f32> = Vec::new(); // Create an empty vector
-    let _y_prediction_test = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
-    let _y_prediction_train = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
-    let _w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
+                                       // avoid unwrap for robust error handling
+                                       //let _y_prediction_test = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
+                                       //let _y_prediction_train = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
+                                       //let _w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
     let _b = 0.0;
+
+    let _y_prediction_test = create_array(_b)?;
+    let _y_prediction_train = create_array(_b)?;
+    let _w = create_array(_b)?;
+
     let (costs, _y_prediction_test, _y_prediction_train, _w, _b, _learning_rate, _num_iterations) =
         model(
             &_train_x,
@@ -193,60 +234,48 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
             print_cost,
         );
 
-    // println!("Costs are {:?}!", costs);
-
-    // save models and test datasets to a file: model_bias.npy model_weights.npy test_set_x.npy test_set_y.npy
-    // let b_array = Array2::from_shape_vec((1, 1), vec![_b]).unwrap();
-    // let b_array = Array2::from_shape_vec((1, 1), vec![_b])?; 
-
     let b_array = create_array(_b)?;
 
-    /*
-    let b_array = match Array2::from_shape_vec((1, 1), vec![_b]) {
-        Ok(array) => array,
-        Err(err) => Err(err),
-        /*
-        Err(err) => {
-            // Handle the error here, e.g., log an error message or return a default value
-            panic!("Error creating array: {}", err);
-        } */
-    };
-    */
+    // overwrite the file if it exists
 
-    let _ = write_npy("model_weights.npy", &_w);
-    let _ = write_npy("model_bias.npy", &b_array);
-    let _ = write_npy("test_set_x.npy", &_test_x);
-    let _ = write_npy("test_set_y.npy", &_y_prediction_test);
+    // let _ = write_npy("model_weights.npy", &_w)?; .map_err(|_| MyError::ParseFloatError)
+    let _ = write_npy("model_weights.npy", &_w).map_err(|_| Errors::WriteNpyError); // .map_err(Errors::ParseFloatError);
+    let _ = write_npy("model_bias.npy", &b_array).map_err(|_| Errors::WriteNpyError);
+    //let _ = write_npy("model_bias.npy", &b_array)?;
+    //let _ = write_npy("test_set_x.npy", &_test_x)?;
+    //let _ = write_npy("test_set_y.npy", &_y_prediction_test)?;
+    let _ = write_npy("test_set_x.npy", &_test_x).map_err(|_| Errors::WriteNpyError);
+    let _ = write_npy("test_set_y.npy", &_y_prediction_test).map_err(|_| Errors::WriteNpyError);
 
     info!("main model_cmd: b {:?}.", b_array);
     info!("main model_cmd: w {:?}.", _w);
     info!("main model_cmd: cost {:?}.", costs);
 
+    // find the index of elements in w equals target_number_f
+    let target_value: f32 = 0.0;
+    let first_row: Vec<f32> = _w.column(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    println!(
+        "Found {} of {:?} times out of total {:?} in w ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+
     Ok(())
 }
 
 fn create_array(b: f32) -> Result<Array2<f32>, Errors> {
-    let result = Array2::from_shape_vec((1, 1), vec![b]).map_err(Errors::ShapeError);
-    result
+    /* let result = Array2::from_shape_vec((1, 1), vec![b]).map_err(Errors::ShapeError);
+    result */
+    Array2::from_shape_vec((1, 1), vec![b]).map_err(Errors::ShapeError)
 }
 
 fn parse_digit(string_number: &str) -> Result<f32, Errors> {
-    let digit_result: Result<f32, ParseFloatError> = string_number.parse();
-    match digit_result {
-        Ok(digit) => Ok(digit),
-        Err(e) => Err(Errors::ParseFloatError(e)),
-    }
+    string_number.parse().map_err(Errors::ParseFloatError)
 }
-/*
-let result = create_array(b);
-match result {
-    Ok(()) => println!("Array created successfully"),
-    Err(err) => match err {
-        MyError::ShapeError(e) => eprintln!("Shape error: {}", e),
-        MyError::ParseFloatError(e) => eprintln!("Parse float error: {}", e),
-    }
-}
-*/
+
 /*
 @cli.command()
 @click.argument("example", type=int)

@@ -1,4 +1,4 @@
-use log::{debug, info};
+use log::{debug, error, info};
 use ndarray::Array2;
 use std::f32::consts::E;
 
@@ -21,6 +21,24 @@ pub fn matrixmultiply(w: &Array2<f32>, b: f32, x: &Array2<f32>) -> Array2<f32> {
     (w.t()).dot(x) + b
 }
 
+/*
+
+fn safe_powf(base: f64, exponent: f64) -> Result<f64, String> {
+    if base < 0.0 && exponent.fract() != 0.0 {
+        return Err("Negative base with non-integer exponent".to_string());
+    }
+
+    let result = base.powf(exponent);
+
+    if result.is_nan() || result.is_infinite() {
+        return Err("Numerical instability".to_string());
+    }
+
+    Ok(result)
+}
+
+*/
+
 //pub fn sigmoid(z: f32) -> f32 {
 pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
     /*
@@ -37,7 +55,9 @@ pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
     1.0 / (1.0 + (-z).mapv(|x| E.powf(x)))
 }
 
+// try Result error next time
 pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
+    //pub fn initialize_with_zeros(dim: usize) -> Result<(Array2<f32>, f32), String> {
     /*
     This function creates a vector of zeros of shape (dim, 1) for w and initializes b to 0.
 
@@ -49,10 +69,18 @@ pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
     b -- initialized scalar (corresponds to the bias) of type float
     */
 
+    /*
+    if dim == 0 {
+        return Err("0 dimension array not allowed".to_string());
+    }
+    */
+
     let w: Array2<f32> = Array2::zeros((dim, 1));
     let owned_w = w.to_owned();
     let b = 0.0;
     (owned_w, b)
+
+    // Ok((owned_w, b))
 }
 
 pub fn propagate(
@@ -308,8 +336,14 @@ pub fn model(
     */
 
     let (w, b) = initialize_with_zeros(x_train.shape()[0]);
-    // w, b = initialize_with_zeros(X_train.shape[0])
 
+    /*
+    let result = initialize_with_zeros(x_train.shape()[0]);
+    match result {
+        Ok((w, b)) => (w, b),
+        Err(error) => error!("Error initialize_with_zeros in model(): {:?}", error), // Keep the message for logging
+    }
+    */
     /*
     params, grads, costs = optimize(
         w, b, X_train, Y_train, num_iterations, learning_rate, print_cost
@@ -359,6 +393,14 @@ pub fn model(
         println!(
             "test accuracy: {:?}",
             100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
+        );
+        println!(
+            " model: y_prediction_test.shape {:?}",
+            y_prediction_test.shape()
+        );
+        info!(
+            " model: y_prediction_test.shape {:?}",
+            y_prediction_test.shape()
         );
     }
 

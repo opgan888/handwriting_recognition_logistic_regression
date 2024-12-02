@@ -1,126 +1,202 @@
-[INFO] [handwritingrecognition::helper] optimize starts
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.40965.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3915743.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28829974.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.37441036.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27673703.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3581511.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2662333.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3427901.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2566815.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.32828432.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.24798913.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3146107.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2400679.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.30172393.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.23283377.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.28958693.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.22622612.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2781544.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.22017424.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.26738206.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2146264.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2572321.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20953043.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.24766074.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20483759.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.23863144.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20051529.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.23010619.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.19652294.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.22205366.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.1928312.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2144398.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.18941277.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2072348.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.1862398.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2004096.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.18329012.
-[INFO] [handwritingrecognition] main model_cmd: b [[0.0]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+02-12-2024 10:09:15 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy: Ok [[0],
+ [0],
+ [0],
+ [0],
+ [0],
+ ...,
+ [0.00000008004963],
+ [0],
+ [0],
+ [0],
+ [0]]
+02-12-2024 10:09:15 [INFO] [handwritingrecognition] predict_test_example_cmd Ok
+02-12-2024 10:10:54 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy b [[0],
+ [0],
+ [0],
+ [0],
+ [0],
+ ...,
+ [0.00000008004963],
+ [0],
+ [0],
+ [0],
+ [0]]
+02-12-2024 10:10:54 [INFO] [handwritingrecognition] predict_test_example_cmd Ok
+02-12-2024 10:14:40 [ERROR] [handwritingrecognition] Error processing in predict_test_example_cmd "10" : ReadNpyError(Io(Os { code: 2, kind: NotFound, message: "No such file or directory" }))
+02-12-2024 10:15:21 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 10:15:24 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.5.
+02-12-2024 10:15:24 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 10:15:28 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.47746718.
+02-12-2024 10:15:28 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2819161.
+02-12-2024 10:15:31 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.45612806.
+02-12-2024 10:15:31 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.26461816.
+02-12-2024 10:15:34 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.4360128.
+02-12-2024 10:15:34 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.24894463.
+02-12-2024 10:15:37 [INFO] [handwritingrecognition] main model_cmd: b [[-0.00934804]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 10:15:37 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
  [0.0],
  [0.0],
  [0.0],
  [0.0],
  ...,
- [-3.3383998e-7],
+ [-7.630473e-8],
  [0.0],
  [0.0],
  [0.0],
  [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28829974, 0.27673703, 0.2662333, 0.2566815, 0.24798913, 0.2400679, 0.23283377, 0.22622612, 0.22017424, 0.2146264, 0.20953043, 0.20483759, 0.20051529, 0.19652294, 0.1928312, 0.18941277, 0.1862398, 0.18329012].
-[INFO] [handwritingrecognition::helper] optimize starts
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.40965.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3915743.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28829974.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.37441036.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27673703.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3581511.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2662333.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3427901.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2566815.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.32828432.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.24798913.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.3146107.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2400679.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.30172393.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.23283377.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.28958693.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.22622612.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2781544.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.22017424.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.26738206.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2146264.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2572321.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20953043.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.24766074.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20483759.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.23863144.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.20051529.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.23010619.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.19652294.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.22205366.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.1928312.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2144398.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.18941277.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2072348.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.1862398.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.2004096.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.18329012.
-[INFO] [handwritingrecognition] main model_cmd: b [[0.0]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+02-12-2024 10:15:37 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.2819161, 0.26461816, 0.24894463].
+02-12-2024 10:15:37 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 10:41:23 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy b [[-0.00934804]]
+02-12-2024 10:41:23 [INFO] [handwritingrecognition] predict_test_example_cmd Ok
+02-12-2024 10:42:07 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 10:42:11 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.5.
+02-12-2024 10:42:11 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 10:42:14 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.47746718.
+02-12-2024 10:42:14 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2819161.
+02-12-2024 10:42:17 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.45612806.
+02-12-2024 10:42:17 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.26461816.
+02-12-2024 10:42:20 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.4360128.
+02-12-2024 10:42:20 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.24894463.
+02-12-2024 10:42:23 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 10:42:23 [INFO] [handwritingrecognition] main model_cmd: b [[-0.00934804]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 10:42:23 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
  [0.0],
  [0.0],
  [0.0],
  [0.0],
  ...,
- [-3.3383998e-7],
+ [-7.630473e-8],
  [0.0],
  [0.0],
  [0.0],
  [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28829974, 0.27673703, 0.2662333, 0.2566815, 0.24798913, 0.2400679, 0.23283377, 0.22622612, 0.22017424, 0.2146264, 0.20953043, 0.20483759, 0.20051529, 0.19652294, 0.1928312, 0.18941277, 0.1862398, 0.18329012].
-[INFO] [handwritingrecognition::helper] optimize starts
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.40965.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.39106378.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28794822.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.373439.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27610183.
-[INFO] [handwritingrecognition::helper] optimize debug message: db 0.35676876.
-[INFO] [handwritingrecognition::helper] optimize debug message: cost 0.2653608.
-[INFO] [handwritingrecognition] main model_cmd: b [[-0.0076546078]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+02-12-2024 10:42:23 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.2819161, 0.26461816, 0.24894463].
+02-12-2024 10:42:23 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 10:47:01 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy w [784, 1]
+02-12-2024 10:47:01 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy b [1, 1]
+02-12-2024 10:47:01 [INFO] [handwritingrecognition] predict_test_example_cmd Ok
+02-12-2024 10:47:49 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy w [784, 1]
+02-12-2024 10:47:49 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy b shape [1, 1]
+02-12-2024 10:47:49 [INFO] [handwritingrecognition] predict_test_example_cmd: read_npy b [[-0.00934804]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2
+02-12-2024 10:47:49 [INFO] [handwritingrecognition] predict_test_example_cmd Ok
+02-12-2024 10:51:51 [INFO] [handwritingrecognition] injest_cmd Ok
+02-12-2024 10:53:03 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 10:53:07 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.40248334.
+02-12-2024 10:53:07 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 10:53:10 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.38517225.
+02-12-2024 10:53:10 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28965467.
+02-12-2024 10:53:13 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.36875063.
+02-12-2024 10:53:13 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27935025.
+02-12-2024 10:53:16 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.35320878.
+02-12-2024 10:53:16 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27000967.
+02-12-2024 10:53:19 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 10:53:19 [INFO] [handwritingrecognition] main model_cmd: b [[-0.007548075]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 10:53:19 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
  [0.0],
  [0.0],
  [0.0],
  [0.0],
  ...,
- [-7.6628766e-8],
+ [-7.6688046e-8],
  [0.0],
  [0.0],
  [0.0],
  [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
-[INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28794822, 0.27610183, 0.2653608].
+02-12-2024 10:53:19 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28965467, 0.27935025, 0.27000967].
+02-12-2024 10:53:19 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 11:04:42 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 11:04:45 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.40248334.
+02-12-2024 11:04:45 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 11:04:49 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.38517225.
+02-12-2024 11:04:49 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28965467.
+02-12-2024 11:04:52 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.36875063.
+02-12-2024 11:04:52 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27935025.
+02-12-2024 11:04:55 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.35320878.
+02-12-2024 11:04:55 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27000967.
+02-12-2024 11:04:58 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 11:04:58 [INFO] [handwritingrecognition] main model_cmd: b [[-0.007548075]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:04:58 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ ...,
+ [-7.6688046e-8],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:04:58 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28965467, 0.27935025, 0.27000967].
+02-12-2024 11:04:58 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 11:08:52 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 11:08:56 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.40248334.
+02-12-2024 11:08:56 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 11:08:59 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.38517225.
+02-12-2024 11:08:59 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28965467.
+02-12-2024 11:09:02 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.36875063.
+02-12-2024 11:09:02 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27935025.
+02-12-2024 11:09:06 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.35320878.
+02-12-2024 11:09:06 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27000967.
+02-12-2024 11:09:08 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 11:09:08 [INFO] [handwritingrecognition] main model_cmd: b [[-0.007548075]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:09:08 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ ...,
+ [-7.6688046e-8],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:09:08 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28965467, 0.27935025, 0.27000967].
+02-12-2024 11:09:08 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 11:11:21 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 11:11:24 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.40248334.
+02-12-2024 11:11:24 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 11:11:28 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.38517225.
+02-12-2024 11:11:28 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28965467.
+02-12-2024 11:11:31 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.36875063.
+02-12-2024 11:11:31 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27935025.
+02-12-2024 11:11:34 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.35320878.
+02-12-2024 11:11:34 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27000967.
+02-12-2024 11:11:37 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 11:11:37 [INFO] [handwritingrecognition] main model_cmd: b [[-0.007548075]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:11:37 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ ...,
+ [-7.6688046e-8],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:11:37 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28965467, 0.27935025, 0.27000967].
+02-12-2024 11:11:37 [INFO] [handwritingrecognition] model_cmd Ok
+02-12-2024 11:12:18 [INFO] [handwritingrecognition::helper] optimize starts
+02-12-2024 11:12:21 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.40248334.
+02-12-2024 11:12:21 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.3009473.
+02-12-2024 11:12:24 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.38517225.
+02-12-2024 11:12:24 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.28965467.
+02-12-2024 11:12:27 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.36875063.
+02-12-2024 11:12:27 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27935025.
+02-12-2024 11:12:31 [INFO] [handwritingrecognition::helper] optimize debug message: db 0.35320878.
+02-12-2024 11:12:31 [INFO] [handwritingrecognition::helper] optimize debug message: cost 0.27000967.
+02-12-2024 11:12:33 [INFO] [handwritingrecognition::helper]  model: y_prediction_test.shape [1, 10000]
+02-12-2024 11:12:33 [INFO] [handwritingrecognition] main model_cmd: b [[-0.007548075]], shape=[1, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:12:33 [INFO] [handwritingrecognition] main model_cmd: w [[0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0],
+ ...,
+ [-7.6688046e-8],
+ [0.0],
+ [0.0],
+ [0.0],
+ [0.0]], shape=[784, 1], strides=[1, 1], layout=CFcf (0xf), const ndim=2.
+02-12-2024 11:12:33 [INFO] [handwritingrecognition] main model_cmd: cost [0.3009473, 0.28965467, 0.27935025, 0.27000967].
+02-12-2024 11:12:33 [INFO] [handwritingrecognition] model_cmd Ok

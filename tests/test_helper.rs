@@ -163,7 +163,7 @@ fn test_model() {
 
     let mut w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
     let mut b = 0.0;
-    
+
     let X_train = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap();
     let X_test = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap();
     let Y_train = Array2::from_shape_vec((1, 1), vec![1.0]).unwrap();
@@ -192,7 +192,7 @@ fn test_model() {
         learning_rate,
         print_cost,
     );
-    
+
     //let _ = write_npy("array.npy", &w);
     // let mut npz = NpzReader::new(File::open("arrays.npz")?)?;
 
