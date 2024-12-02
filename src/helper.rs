@@ -1,6 +1,8 @@
 use log::{debug, error, info};
 use ndarray::Array2;
 use std::f32::consts::E;
+//use handwritingrecognition::data::find_indices_filter;
+use crate::data::find_indices_filter;
 
 pub fn element_log(a: &Array2<f32>) -> Array2<f32> {
     let result: Array2<f32> = a.mapv(|e| e.log10());
@@ -404,6 +406,78 @@ pub fn model(
         );
     }
 
+    let target_value: f32 = 1.0;
+    let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    println!(
+        "Found {} of {:?} times out of total {:?} in _y_prediction_test ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+    info!(
+        "Found {} of {:?} times out of total {:?} in _y_prediction_test ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+
+    let target_value: f32 = 1.0;
+    let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    println!(
+        "Found {} {:?} times out of total {:?} in y_test ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+    info!(
+        "Found {} of {:?} times out of total {:?} in y_test ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+
+
+    let target_value: f32 = 1.0;
+    let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    println!(
+        "Found {} of {:?} times out of total {:?} in y_prediction_train ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+    info!(
+        "Found {} of {:?} times out of total {:?} in y_prediction_train ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+
+    let target_value: f32 = 1.0;
+    let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    println!(
+        "Found {} {:?} times out of total {:?} in y_train ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
+    info!(
+        "Found {} of {:?} times out of total {:?} in y_train ... {:?}",
+        target_value,
+        index3_w.len(),
+        first_row.len(),
+        index3_w
+    );
     /*
     d = {
         "costs": costs,
