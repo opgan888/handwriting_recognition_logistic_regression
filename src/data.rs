@@ -66,6 +66,7 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     println!("Shape of train_data: {:?}", train_data.shape());
     println!("Shape of test_data: {:?}", test_data.shape());
 
+
     // # train set y and test_set_y are originally row vector (m, 1) array. Reshape to column vector (1,m) array
     println!("Shape of train_labels: {:?}", train_labels.shape());
     println!("Shape of test_labels: {:?}", test_labels.shape());
@@ -212,14 +213,15 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     // Transpose the reshaped array to get the desired shape (784, 10000)
     let flattened_test_data = reshaped_data.t();
     println!("Flattened test shape: {:?}", flattened_test_data.shape());
+    println!("Element of test_data: {:?}", flattened_test_data[(700, 10)]);
 
     // standardize dataset above
     //println!("Flattened standardized test: {:?}", flattened_test_data);
     found = flattened_test_data.iter().any(|&x| x > 0.5);
     if found {
-        //println!("Found the target value > {}", 0.0);
+        println!("flattened_test_data is not all zeros");
     } else {
-        //println!("Target value not found.");
+        println!("flattened_test_data is all zeros");
     }
 
     //return train_set_x, train_set_y, test_set_x, test_set_y
