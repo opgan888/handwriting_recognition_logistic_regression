@@ -189,16 +189,9 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     // train_labels_colvector contains 0 to 9 labels whereas train_labels_binary contains 0 or 1
     // train_labels_binary and test_labels_binary are already column vectors
     let train_labels_colvector = train_labels.into_shape_with_order((1, 60_000)).unwrap();
-    println!(
-        "Flattened train_labels shape: {:?}",
-        train_labels_colvector.shape()
-    );
 
     let test_labels_colvector = test_labels.into_shape_with_order((1, 10_000)).unwrap();
-    println!(
-        "Flattened test_labels shape: {:?}",
-        test_labels_colvector.shape()
-    );
+
 
     // Flatten train dataset from array(60000, 28, 28) into (784,60000) and test dataset from (10000,28,28) to (748, 10000)
 
@@ -209,15 +202,27 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     let flattened_train_data = reshaped_data.t();
     println!("Flattened train shape: {:?}", flattened_train_data.shape());
 
+    println!(
+        "Flattened train_labels shape: {:?}",
+        train_labels_colvector.shape()
+    );
+
+
     let reshaped_data = test_data.to_shape((10000, 784)).unwrap();
     // Transpose the reshaped array to get the desired shape (784, 10000)
     let flattened_test_data = reshaped_data.t();
     println!("Flattened test shape: {:?}", flattened_test_data.shape());
-    println!("Element of test_data: {:?}", flattened_test_data[(700, 10)]);
+
+    println!(
+        "Flattened test_labels shape: {:?}",
+        test_labels_colvector.shape()
+    );
+
+    println!("Element of flattened_train_data [12, 12352]: {:?}", flattened_train_data[(12, 12352)]);
 
     // standardize dataset above
     //println!("Flattened standardized test: {:?}", flattened_test_data);
-    found = flattened_test_data.iter().any(|&x| x > 0.5);
+    found = flattened_train_data.iter().any(|&x| x > 0.0);
     if found {
         println!("flattened_test_data is not all zeros");
     } else {

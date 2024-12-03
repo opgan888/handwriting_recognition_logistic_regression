@@ -67,7 +67,10 @@ pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
     s -- sigmoid(z), a probability between 0 and 1
     */
 
-    1.0 / (1.0 + (-z).mapv(|x| E.powf(x)))
+    // 1.0 / (1.0 + (-z).mapv(|x| E.powf(x)))
+
+    1.0 / (1.0 +  z.mapv(|x| (-x).exp()) )
+
 }
 
 // try Result error next time
@@ -98,12 +101,14 @@ pub fn initialize_with_zeros(dim: usize) -> (Array2<f32>, f32) {
     // Ok((owned_w, b))
 }
 
+// use dot matrix slower than python
 pub fn propagate(
     w: &Array2<f32>,
     b: f32,
     x: &Array2<f32>,
     y: &Array2<f32>,
-) -> (Array2<f32>, f32, f32) {
+    //dw: &Array2<f32>, // remove if not working
+) -> (Array2<f32>, f32, f32) { // remove & if not working
     /*
     Implement the cost function and its gradient for the propagation explained above
 
@@ -134,22 +139,72 @@ pub fn propagate(
     */
 
     //let A = sigmoid(np.dot(np.transpose(w), X) + b)
-    let a = sigmoid((w.t()).dot(x) + b);
+    // let z = (w.t()).dot(x) + b;
+    let wt = w.t();
+    //println!("w shape: {:?}", w.shape());
+    //println!("x shape: {:?}", x.shape());
 
+    /*
+    println!("Bef bbcc");
+    let bb: Array2<f32> = Array2::zeros((2000, 2000));
+    let cc: Array2<f32> = Array2::zeros((2000, 2000));
+    let z2 = bb.dot(&cc);
+    println!("Aft bbcc");
+    */
+    println!("Bef dot");
+    let z1 = wt.dot(x);
+    println!("After dot");
+
+    let z = z1 + b;
+  
+    // let z = w.t().dot(x) + b;
+
+    // let a = sigmoid((w.t()).dot(x) + b);
+    let a = sigmoid(z);
+
+    // log (python) and ln (Rust) refers to natural log
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
+    /*
     let cost = (-1.0 / m)
-        * ((y * (&a.mapv(|e| e.log10())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.log10())))
+        * ((y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln())))
             .iter()
             .sum::<f32>());
+    */
+
+    let cost: f32 = -(y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln()))).sum()/m;
+    
+    //println!("cost {:?} ", cost);
+
+    /*
+    println!(
+        "y * (&a.mapv(|e| e.log())) {:?} ", y * (&a.mapv(|e| e.ln()))
+    );
+
+    println!(
+        "m {:?} ", m
+    );
+
+    println!(
+        "a {:?} ", a
+    );
+
+    println!(
+        "cost {:?} ", cost
+    ); */
 
     //# BACKWARD PROPAGATION (TO FIND GRAD)
 
     // dw = (1 / m) * np.dot(X, np.transpose(A - Y))
-    let dw = (1.0 / m) * x.dot(&((&a - y).t())); // // Negate each element
+    // let dw = (1.0 / m) * x.dot(&((&a - y).t())); // // Negate each element
+
+    // let dw = x.dot(&((&a - y).t()))/m; // // Negate each element
+    let dw = x.dot(&((&a - y).t()))/m; // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
-    let db = (1.0 / m) * (&a - y).iter().sum::<f32>();
+    // let db = (1.0 / m) * (&a - y).iter().sum::<f32>();
+    let db: f32 = (&a - y).sum()/m;
 
+    // (dw, db, cost)
     (dw, db, cost)
 }
 
@@ -208,6 +263,7 @@ pub fn optimize(
         // grads, cost = ...
         // grads, cost = propagate(w, b, X, Y)
         // (dw, db, cost) = propagate(w, b, X, Y);
+        //(dw, db, cost) = propagate(&w_owned, b_owned, x, y);
         (dw, db, cost) = propagate(&w_owned, b_owned, x, y);
         // # YOUR CODE ENDS HERE
 
@@ -224,6 +280,7 @@ pub fn optimize(
         w -= learning_rate * dw
         b -= learning_rate * db
         */
+     
 
         w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
         b_owned = b_owned - learning_rate * db;
