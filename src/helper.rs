@@ -189,7 +189,7 @@ pub fn optimize(
     let mut db = 0.0;
     let mut cost = 0.0;
 
-    for i in 1..num_iterations {
+    for i in 0..num_iterations {
         //for i in range(num_iterations):
         // Cost and gradient calculation
         // grads, cost = ...
@@ -218,7 +218,7 @@ pub fn optimize(
         //b = b_owned;
 
         // Record the costs print interval
-        let print_interval = 100;
+        let print_interval = 1;
         if i % print_interval == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
@@ -227,7 +227,7 @@ pub fn optimize(
             // Print the cost every 100 training iterations if request is True
             // print!("Cost after iteration %i: %f" % (i, cost))
             if print_cost {
-                println!("Cost after iteration {:?}: {:?}", i, cost);
+                println!("Cost after iteration {:?}: {:?} {:?}", i, cost, b_owned);
             }
         }
     }
@@ -396,6 +396,7 @@ pub fn model(
             "test accuracy: {:?}",
             100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
         );
+        /*
         println!(
             " model: y_prediction_test.shape {:?}",
             y_prediction_test.shape()
@@ -404,21 +405,15 @@ pub fn model(
             " model: y_prediction_test.shape {:?}",
             y_prediction_test.shape()
         );
+        */
     }
 
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    println!(
-        "Found {} of {:?} times out of total {:?} in _y_prediction_test ... {:?}",
-        target_value,
-        index3_w.len(),
-        first_row.len(),
-        index3_w
-    );
+
     info!(
-        "Found {} of {:?} times out of total {:?} in _y_prediction_test ... {:?}",
-        target_value,
+        "Found given digit {:?} times out of total {:?} in _y_prediction_test ... {:?}",
         index3_w.len(),
         first_row.len(),
         index3_w
@@ -427,16 +422,9 @@ pub fn model(
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    println!(
-        "Found {} {:?} times out of total {:?} in y_test ... {:?}",
-        target_value,
-        index3_w.len(),
-        first_row.len(),
-        index3_w
-    );
+
     info!(
-        "Found {} of {:?} times out of total {:?} in y_test ... {:?}",
-        target_value,
+        "Found given digit {:?} times out of total {:?} in y_test ... {:?}",
         index3_w.len(),
         first_row.len(),
         index3_w
@@ -446,16 +434,9 @@ pub fn model(
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    println!(
-        "Found {} of {:?} times out of total {:?} in y_prediction_train ... {:?}",
-        target_value,
-        index3_w.len(),
-        first_row.len(),
-        index3_w
-    );
+
     info!(
-        "Found {} of {:?} times out of total {:?} in y_prediction_train ... {:?}",
-        target_value,
+        "Found given digit {:?} times out of total {:?} in y_prediction_train ... {:?}",
         index3_w.len(),
         first_row.len(),
         index3_w
@@ -464,16 +445,8 @@ pub fn model(
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    println!(
-        "Found {} {:?} times out of total {:?} in y_train ... {:?}",
-        target_value,
-        index3_w.len(),
-        first_row.len(),
-        index3_w
-    );
     info!(
-        "Found {} of {:?} times out of total {:?} in y_train ... {:?}",
-        target_value,
+        "Found given digit  {:?} times out of total {:?} in y_train ... {:?}",
         index3_w.len(),
         first_row.len(),
         index3_w
