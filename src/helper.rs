@@ -198,8 +198,8 @@ pub fn optimize(
         (dw, db, cost) = propagate(&w_owned, b_owned, x, y);
         // # YOUR CODE ENDS HERE
 
-        info!("optimize debug message: db {:?}.", db);
-        info!("optimize debug message: cost {:?}.", cost);
+        // info!("optimize debug message: db {:?}.", db);
+        // info!("optimize debug message: cost {:?}.", cost);
 
         /*
         # Retrieve derivatives from grads
@@ -218,7 +218,7 @@ pub fn optimize(
         //b = b_owned;
 
         // Record the costs print interval
-        let print_interval = 1;
+        let print_interval = 100;
         if i % print_interval == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
