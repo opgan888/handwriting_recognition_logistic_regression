@@ -144,21 +144,21 @@ pub fn propagate(
 
     //let A = sigmoid(np.dot(np.transpose(w), X) + b)
     // let z = (w.t()).dot(x) + b;
-    let wt = w.t();
+    //let wt = w.t();
     //println!("w shape: {:?}", w.shape());
     //println!("x shape: {:?}", x.shape());
 
 
-    println!("Bef dot");
-    let z1 = wt.dot(x);
-    println!("After dot");
+    //println!("Bef dot");
+    //let z1 = wt.dot(x);
+    //println!("After dot");
 
-    let z = z1 + b;
+    //let z = z1 + b;
   
     // let z = w.t().dot(x) + b;
 
-    // let a = sigmoid((w.t()).dot(x) + b);
-    let a = sigmoid(z);
+    let a = sigmoid(w.t().dot(x) + b);
+    //let a = sigmoid(z);
 
     // log (python) and ln (Rust) refers to natural log
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
@@ -286,7 +286,7 @@ pub fn optimize(
         //b = b_owned;
 
         // Record the costs print interval
-        let print_interval = 1;
+        let print_interval = 100;
         if i % print_interval == 0 {
             //if i % 100 == 0:
             // costs.append(cost)
@@ -481,21 +481,27 @@ pub fn model(
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
+        "Found given digit {:?} times out of total {:?} in _y_prediction_test",
+        index3_w.len(),
+        first_row.len()
+    );
+
+    /*
+    info!(
         "Found given digit {:?} times out of total {:?} in _y_prediction_test ... {:?}",
         index3_w.len(),
         first_row.len(),
         index3_w
     );
-
+    */
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
-        "Found given digit {:?} times out of total {:?} in y_test ... {:?}",
+        "Found given digit {:?} times out of total {:?} in y_test ...",
         index3_w.len(),
-        first_row.len(),
-        index3_w
+        first_row.len()
     );
 
 
@@ -504,20 +510,18 @@ pub fn model(
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
-        "Found given digit {:?} times out of total {:?} in y_prediction_train ... {:?}",
+        "Found given digit {:?} times out of total {:?} in y_prediction_train ...",
         index3_w.len(),
-        first_row.len(),
-        index3_w
+        first_row.len()
     );
 
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     info!(
-        "Found given digit  {:?} times out of total {:?} in y_train ... {:?}",
+        "Found given digit  {:?} times out of total {:?} in y_train ...",
         index3_w.len(),
-        first_row.len(),
-        index3_w
+        first_row.len()
     );
     /*
     d = {

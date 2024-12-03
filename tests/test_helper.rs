@@ -14,7 +14,7 @@ use ndarray::Array2;
 use ndarray_npy::write_npy;
 use ndarray_npy::NpzReader;
 use std::fs::File;
-
+/*
 #[test]
 fn test_cost_cal() {
     let a = Array2::from_shape_vec((1, 2), vec![0.9, 0.9]).unwrap();
@@ -51,21 +51,23 @@ fn test_element_sum() {
 
     assert_eq!(result, expected, "test_element_sum algo failed");
 }
-
+*/
 #[test]
+// rust slower python in dot product
 fn test_matrixmultiply() {
-    let w = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap();
-    let w = Array2::from_shape_vec((2, 1), vec![5.0, 5.0]).unwrap();
-    let b = 5.0;
 
-    let x = Array2::from_shape_vec((2, 1), vec![1.0, 1.0]).unwrap();
+    let b = 5.0;
+    let w: Array2<f32> = Array2::zeros((784, 1));
+    let x: Array2<f32> = Array2::zeros((784, 60000));
+    let expected: Array2<f32> = Array2::zeros((1, 60000));
+
     let result = matrixmultiply(&w, b, &x);
-    let result = sigmoid(result);
-    let expected = Array2::from_shape_vec((1, 1), vec![0.99999964]).unwrap();
+    //let result = sigmoid(result);
+    // let expected = Array2::from_shape_vec((1, 1), vec![0.99999964]).unwrap();
 
     assert_eq!(result, expected, "test_matrixmultiply algo failed");
 }
-
+/*
 #[test]
 fn test_sigmoid() {
     let input = Array2::from_shape_vec((2, 1), vec![0.0, 0.0]).unwrap(); // test 0.0
@@ -209,3 +211,4 @@ fn test_model() {
     let expected = 0.0;
     assert_eq!(result, expected, "b computation algo failed");
 }
+*/

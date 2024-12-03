@@ -209,7 +209,7 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     let digit: f32 = parse_digit(string_number)?;
 
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
-    let _num_iterations = 2;
+    let _num_iterations = 2000;
     let _learning_rate = 0.005;
     let print_cost = true;
     let _costs: Vec<f32> = Vec::new(); // Create an empty vector
@@ -257,16 +257,14 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     let first_row: Vec<f32> = _y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     println!(
-        "Predict given digit in Y_prediction_test {:?} times out of total {:?} ... {:?}",
+        "Predict given digit in Y_prediction_test {:?} times out of total {:?}",
         index3_w.len(),
-        first_row.len(),
-        index3_w
+        first_row.len()
     );
     info!(
-        "Predict given digit in Y_prediction_test {:?} times out of total {:?} ... {:?}",
+        "Predict given digit in Y_prediction_test {:?} times out of total {:?} ",
         index3_w.len(),
-        first_row.len(),
-        index3_w
+        first_row.len()
     );
 
     Ok(())

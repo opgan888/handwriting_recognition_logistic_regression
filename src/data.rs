@@ -218,16 +218,18 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         test_labels_colvector.shape()
     );
 
-    println!("Element of flattened_train_data [12, 12352]: {:?}", flattened_train_data[(12, 12352)]);
+    // println!("Element of flattened_train_data [12, 12352]: {:?}", flattened_train_data[(12, 12352)]);
 
     // standardize dataset above
     //println!("Flattened standardized test: {:?}", flattened_test_data);
+    /*
     found = flattened_train_data.iter().any(|&x| x > 0.0);
     if found {
         println!("flattened_test_data is not all zeros");
     } else {
         println!("flattened_test_data is all zeros");
     }
+    */
 
     //return train_set_x, train_set_y, test_set_x, test_set_y
     let owned_flattened_train_data = flattened_train_data.to_owned(); // OwnedRepr: Represents an array that owns its data. You can modify the elements of this array directly.
