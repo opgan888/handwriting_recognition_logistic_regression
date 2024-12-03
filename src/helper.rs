@@ -138,19 +138,17 @@ pub fn propagate(
     # And don't use loops for the sum.
     */
 
+
+    //let w: Array2<f32> = Array2::zeros((784, 1));
+    //let x1: &Array2<f32> = &Array2::zeros((784, 60000));
+
     //let A = sigmoid(np.dot(np.transpose(w), X) + b)
     // let z = (w.t()).dot(x) + b;
     let wt = w.t();
     //println!("w shape: {:?}", w.shape());
     //println!("x shape: {:?}", x.shape());
 
-    /*
-    println!("Bef bbcc");
-    let bb: Array2<f32> = Array2::zeros((2000, 2000));
-    let cc: Array2<f32> = Array2::zeros((2000, 2000));
-    let z2 = bb.dot(&cc);
-    println!("Aft bbcc");
-    */
+
     println!("Bef dot");
     let z1 = wt.dot(x);
     println!("After dot");

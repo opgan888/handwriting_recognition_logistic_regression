@@ -209,7 +209,7 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     let digit: f32 = parse_digit(string_number)?;
 
     let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
-    let _num_iterations = 2000;
+    let _num_iterations = 2;
     let _learning_rate = 0.005;
     let print_cost = true;
     let _costs: Vec<f32> = Vec::new(); // Create an empty vector
