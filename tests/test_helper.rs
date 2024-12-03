@@ -8,11 +8,20 @@ use handwritingrecognition::helper::optimize;
 use handwritingrecognition::helper::predict;
 use handwritingrecognition::helper::propagate;
 use handwritingrecognition::helper::sigmoid;
+use handwritingrecognition::helper::cost_cal;
 
 use ndarray::Array2;
 use ndarray_npy::write_npy;
 use ndarray_npy::NpzReader;
 use std::fs::File;
+
+#[test]
+fn test_cost_cal() {
+    let a = Array2::from_shape_vec((1, 2), vec![0.9, 0.9]).unwrap();
+    let result = cost_cal(&a);
+    let expected = 0.0;
+    assert_eq!(result, expected, "test_cost_cal algo failed");
+}
 
 #[test]
 fn test_element_log() {

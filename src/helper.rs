@@ -4,6 +4,19 @@ use std::f32::consts::E;
 //use handwritingrecognition::data::find_indices_filter;
 use crate::data::find_indices_filter;
 
+pub fn cost_cal(a: &Array2<f32>) -> f32 {
+    let m=2.0;
+    let y = &Array2::from_shape_vec((1, 2),  vec![0.0, 0.0]).unwrap();
+    let result = (-1.0 / m) * ((y * (a.mapv(|e| e.log10())) + (1.0 - y) * ((1.0 - a).mapv(|d| d.log10())))
+    .iter()
+    .sum::<f32>());
+
+    result
+}
+
+
+
+
 pub fn element_log(a: &Array2<f32>) -> Array2<f32> {
     let result: Array2<f32> = a.mapv(|e| e.log10());
     result
