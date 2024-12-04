@@ -1,3 +1,4 @@
+use handwritingrecognition::helper::cost_cal;
 use handwritingrecognition::helper::element_log;
 use handwritingrecognition::helper::element_product;
 use handwritingrecognition::helper::element_sum;
@@ -8,7 +9,6 @@ use handwritingrecognition::helper::optimize;
 use handwritingrecognition::helper::predict;
 use handwritingrecognition::helper::propagate;
 use handwritingrecognition::helper::sigmoid;
-use handwritingrecognition::helper::cost_cal;
 
 use ndarray::Array2;
 use ndarray_npy::write_npy;
@@ -55,7 +55,6 @@ fn test_element_sum() {
 #[test]
 // rust slower python in dot product
 fn test_matrixmultiply() {
-
     let b = 5.0;
     let w: Array2<f32> = Array2::zeros((784, 1));
     let x: Array2<f32> = Array2::zeros((784, 60000));

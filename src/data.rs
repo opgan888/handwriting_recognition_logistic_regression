@@ -66,7 +66,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     println!("Shape of train_data: {:?}", train_data.shape());
     println!("Shape of test_data: {:?}", test_data.shape());
 
-
     // # train set y and test_set_y are originally row vector (m, 1) array. Reshape to column vector (1,m) array
     println!("Shape of train_labels: {:?}", train_labels.shape());
     println!("Shape of test_labels: {:?}", test_labels.shape());
@@ -192,7 +191,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
 
     let test_labels_colvector = test_labels.into_shape_with_order((1, 10_000)).unwrap();
 
-
     // Flatten train dataset from array(60000, 28, 28) into (784,60000) and test dataset from (10000,28,28) to (748, 10000)
 
     assert_eq!(train_data.shape(), &[60000, 28, 28]);
@@ -206,7 +204,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         "Flattened train_labels shape: {:?}",
         train_labels_colvector.shape()
     );
-
 
     let reshaped_data = test_data.to_shape((10000, 784)).unwrap();
     // Transpose the reshaped array to get the desired shape (784, 10000)
@@ -234,25 +231,14 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     //return train_set_x, train_set_y, test_set_x, test_set_y
     let owned_flattened_train_data = flattened_train_data.to_owned(); // OwnedRepr: Represents an array that owns its data. You can modify the elements of this array directly.
     let owned_flattened_test_data = flattened_test_data.to_owned();
-    /*
-    (
-        owned_flattened_train_data,
-        train_labels_colvector,
-        owned_flattened_test_data,
-        test_labels_colvector,
-    )
-    */
+
     (
         owned_flattened_train_data,
         train_labels_binary,
         owned_flattened_test_data,
         test_labels_binary,
     )
-    /*
-        // Access the dimension information
-        /*
-        let dim = arr.dim(); // This is of type `ndarray::Dim<[usize; 3]>`
-        let (x, y, z) = dim.into_tuple(); // Extract dimensions as tuple
-        */
-    */
+
+    // save test labels to file
+    //let _ = write_npy("test_labels.npy", &test_labels).map_err(|_| Errors::WriteNpyError);
 }

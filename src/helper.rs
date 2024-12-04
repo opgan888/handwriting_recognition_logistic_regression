@@ -5,17 +5,15 @@ use std::f32::consts::E;
 use crate::data::find_indices_filter;
 
 pub fn cost_cal(a: &Array2<f32>) -> f32 {
-    let m=2.0;
-    let y = &Array2::from_shape_vec((1, 2),  vec![0.0, 0.0]).unwrap();
-    let result = (-1.0 / m) * ((y * (a.mapv(|e| e.log10())) + (1.0 - y) * ((1.0 - a).mapv(|d| d.log10())))
-    .iter()
-    .sum::<f32>());
+    let m = 2.0;
+    let y = &Array2::from_shape_vec((1, 2), vec![0.0, 0.0]).unwrap();
+    let result = (-1.0 / m)
+        * ((y * (a.mapv(|e| e.log10())) + (1.0 - y) * ((1.0 - a).mapv(|d| d.log10())))
+            .iter()
+            .sum::<f32>());
 
     result
 }
-
-
-
 
 pub fn element_log(a: &Array2<f32>) -> Array2<f32> {
     let result: Array2<f32> = a.mapv(|e| e.log10());
@@ -69,8 +67,7 @@ pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
 
     // 1.0 / (1.0 + (-z).mapv(|x| E.powf(x)))
 
-    1.0 / (1.0 +  z.mapv(|x| (-x).exp()) )
-
+    1.0 / (1.0 + z.mapv(|x| (-x).exp()))
 }
 
 // try Result error next time
@@ -108,7 +105,8 @@ pub fn propagate(
     x: &Array2<f32>,
     y: &Array2<f32>,
     //dw: &Array2<f32>, // remove if not working
-) -> (Array2<f32>, f32, f32) { // remove & if not working
+) -> (Array2<f32>, f32, f32) {
+    // remove & if not working
     /*
     Implement the cost function and its gradient for the propagation explained above
 
@@ -138,7 +136,6 @@ pub fn propagate(
     # And don't use loops for the sum.
     */
 
-
     //let w: Array2<f32> = Array2::zeros((784, 1));
     //let x1: &Array2<f32> = &Array2::zeros((784, 60000));
 
@@ -148,13 +145,12 @@ pub fn propagate(
     //println!("w shape: {:?}", w.shape());
     //println!("x shape: {:?}", x.shape());
 
-
     //println!("Bef dot");
     //let z1 = wt.dot(x);
     //println!("After dot");
 
     //let z = z1 + b;
-  
+
     // let z = w.t().dot(x) + b;
 
     let a = sigmoid(w.t().dot(x) + b);
@@ -169,8 +165,9 @@ pub fn propagate(
             .sum::<f32>());
     */
 
-    let cost: f32 = -(y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln()))).sum()/m;
-    
+    let cost: f32 =
+        -(y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln()))).sum() / m;
+
     //println!("cost {:?} ", cost);
 
     /*
@@ -196,11 +193,11 @@ pub fn propagate(
     // let dw = (1.0 / m) * x.dot(&((&a - y).t())); // // Negate each element
 
     // let dw = x.dot(&((&a - y).t()))/m; // // Negate each element
-    let dw = x.dot(&((&a - y).t()))/m; // // Negate each element
+    let dw = x.dot(&((&a - y).t())) / m; // // Negate each element
 
     // db = (1 / m) * np.sum(A - Y)
     // let db = (1.0 / m) * (&a - y).iter().sum::<f32>();
-    let db: f32 = (&a - y).sum()/m;
+    let db: f32 = (&a - y).sum() / m;
 
     // (dw, db, cost)
     (dw, db, cost)
@@ -278,7 +275,6 @@ pub fn optimize(
         w -= learning_rate * dw
         b -= learning_rate * db
         */
-     
 
         w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
         b_owned = b_owned - learning_rate * db;
@@ -503,7 +499,6 @@ pub fn model(
         index3_w.len(),
         first_row.len()
     );
-
 
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array

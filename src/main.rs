@@ -4,6 +4,7 @@ use handwritingrecognition::data::find_indices_filter;
 use handwritingrecognition::data::injest;
 use handwritingrecognition::helper::model;
 use handwritingrecognition::helper::sigmoid;
+use handwritingrecognition::helper::predict;
 use log::LevelFilter;
 use log::{debug, error, info};
 use ndarray::{arr2, Array2};
@@ -105,81 +106,45 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 fn predict_test_example_cmd(string_number: &str) -> Result<(), Errors> {
     /*
-        Predict a test example from test dataset
+       Predict the indexed test image from test dateset if belongs to trained number
     */
     println!(
-        "Predict a digit from test dateset for given index of {}!",
+        "Predict the indexed  {} test image from test dateset if belongs to trained number!",
         string_number
     );
 
     let digit: f32 = parse_digit(string_number)?;
 
+    let test_set_x: Array2<f32> = read_npy("test_set_x.npy")?;
+    let test_set_y: Array2<f32> = read_npy("test_set_y.npy")?;
+
     let w: Array2<f32> = read_npy("model_weights.npy")?;
     let b: Array2<f32> = read_npy("model_bias.npy")?;
-    info!("predict_test_example_cmd: read_npy w {:?}", w.shape());
-    info!("predict_test_example_cmd: read_npy b shape {:?}", b.shape());
-    info!("predict_test_example_cmd: read_npy b {:?}", b);
+    let test_set_x_example: Array2<f32> = test_set_x.column(digit as usize).to_owned().into_shape((test_set_x.shape()[0], 1)).map_err(Errors::ShapeError)?;
 
-    // let w: Array2<f32> = read_npy("model_weights.npy").map_err(|_| Errors::ReadNpyError)?;
-    // let _ = read_npy("model_weights.npy").map_err(|_| Errors::ReadNpyError)?;
-
-    // let _ = read_npy("model_weights.npy")?.map_err(|err| Errors::from(err))?;
-
+    // info!("predict_test_example_cmd: read_npy w {:?}", w.shape());
+    // info!("predict_test_example_cmd: read_npy b shape {:?}", b.shape());
+    info!("predict_test_example_cmd: read_npy b {:?}", b[(0,0)]);
+    info!("predict_test_example_cmd: read_npy test_set_x {:?}", test_set_x.shape());
+    info!("predict_test_example_cmd: read_npy test_set_y shape {:?}", test_set_y.shape());
+    info!("predict_test_example_cmd: test_set_x_example shape {:?}", test_set_x_example.shape());
+    let a = "Actual is ".to_string() + &test_set_y[(0, digit as usize)].to_string();
+    let p = "Prediction is ".to_string() + &predict(&w, b[(0,0)], &test_set_x_example).to_string();
+    info!("predict_test_example_cmd  {:?}  {:?} ", a, p);
+    
     /*
-    let file = File::open("model_weights.npy");
-    let array: ArrayD<f32> = ndarray_npy::read(file);
-    let array2d = array.into_shape((2, 2)).unwrap();
-    */
-    /*
-    let b_array: Array2<f32> = read_npy("model_bias.npy").map_err(|_| Errors::ReadNpyError);
-    let b = b_array[0];
-    */
 
-    /*
-        # injest test datasets from the NPY file
-        test_set_x = np.load("test_set_x.npy")
-        test_set_y = np.load("test_set_y.npy")
-
-        # Load trained model from the NPY file
-        w = np.load("model_weights.npy")
-        b = np.load("model_bias.npy")[
-            0
-        ]  # convert a Python array with a single element to a scalar
+        test_set_x_example = test_set_x[:, example].reshape(test_set_x[:, example].size, 1)
+        a = "Actual = " + str(test_set_y[:, example])
+        p = "Prediction = " + str(predict(w, b, test_set_x_example))
+        click.echo(a)
+        click.echo(p)
+        log("Example " + str(example) + " :: " + a + " : " + p)
     */
 
     Ok(())
 
-    //let (_train_x, _train_y, _test_x, _test_y) = injest(digit);
 
-    // let npy_data: NpyData<T> = read_npy("model_bias.npy")?; //?
-    // let array: Array2<f32> = npy_data.into_array2()?; //? removed
-
-    /*
-    let file = File::open(filename)?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
-    Ok(contents)
-    */
-    // println!("Saved bias {}", npy_data);
-
-    /*
-    let _ = write_npy("model_weights.npy", &_w);
-    let _ = write_npy("model_bias.npy", &b_array);
-    let _ = write_npy("test_set_x.npy", &_test_x);
-    let _ = write_npy("test_set_y.npy", &_y_prediction_test);
-    */
-
-    /*
-    # injest test datasets from the NPY file
-    test_set_x = np.load("test_set_x.npy")
-    test_set_y = np.load("test_set_y.npy")
-
-    # Load trained model from the NPY file
-    w = np.load("model_weights.npy")
-    b = np.load("model_bias.npy")[
-        0
-    ]  # convert a Python array with a single element to a scalar
-    */
 }
 
 fn predict_unseen_example_cmd(string_number: &str) -> Result<(), Errors> {
