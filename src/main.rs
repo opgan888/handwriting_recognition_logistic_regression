@@ -222,12 +222,12 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     let first_row: Vec<f32> = _y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     println!(
-        "Predict given digit in Y_prediction_test {:?} times out of total {:?}",
+        "Predict {:?}, {:?} out of {:?} in Y_prediction_test", digit,
         index3_w.len(),
         first_row.len()
     );
     info!(
-        "Predict given digit in Y_prediction_test {:?} times out of total {:?} ",
+        "Predict {:?}, {:?} out of {:?} in Y_prediction_test ", digit,
         index3_w.len(),
         first_row.len()
     );

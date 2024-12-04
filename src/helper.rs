@@ -438,19 +438,7 @@ pub fn model(
     let y_prediction_train = predict(&w, b, x_train);
 
     // # Print train/test Errors
-    /*
-    if print_cost:
-        print(
-            "train accuracy: {} %".format(
-                100 - np.mean(np.abs(Y_prediction_train - Y_train)) * 100
-            )
-        )
-        print(
-            "test accuracy: {} %".format(
-                100 - np.mean(np.abs(Y_prediction_test - Y_test)) * 100
-            )
-        )
-        */
+
     if print_cost {
         println!(
             "train accuracy: {:?}",
@@ -460,16 +448,7 @@ pub fn model(
             "test accuracy: {:?}",
             100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
         );
-        /*
-        println!(
-            " model: y_prediction_test.shape {:?}",
-            y_prediction_test.shape()
-        );
-        info!(
-            " model: y_prediction_test.shape {:?}",
-            y_prediction_test.shape()
-        );
-        */
+
     }
 
     let target_value: f32 = 1.0;
@@ -482,14 +461,7 @@ pub fn model(
         first_row.len()
     );
 
-    /*
-    info!(
-        "Found given digit {:?} times out of total {:?} in _y_prediction_test ... {:?}",
-        index3_w.len(),
-        first_row.len(),
-        index3_w
-    );
-    */
+    // given digit?
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
