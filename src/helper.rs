@@ -236,7 +236,7 @@ pub fn optimize(
         2) Update the parameters using gradient descent rule for w and b.
     */
 
-    info!("optimize starts");
+    //info!("optimize starts");
 
     //w = copy.deepcopy(w)
     //b = copy.deepcopy(b)
@@ -451,42 +451,53 @@ pub fn model(
 
     }
 
-    let target_value: f32 = 1.0;
-    let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
-    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-
     info!(
-        "Found given digit {:?} times out of total {:?} in _y_prediction_test",
-        index3_w.len(),
-        first_row.len()
+        "train accuracy: {:?}",
+        100.0 - ((&y_prediction_train - y_train).abs()).mean().unwrap() * 100.0
+    );
+    info!(
+        "test accuracy: {:?}",
+        100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
     );
 
+    let target_value: f32 = 1.0;
+    let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
+    let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    /*
+    info!(
+        "Predicted given digit {:?} times out of total {:?} in _y_prediction_test",
+        index3_w_pred.len(),
+        first_row.len()
+    );
+    */
     // given digit?
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
-        "Found given digit {:?} times out of total {:?} in y_test ...",
+        "Predicted the given digit {:?} out of {:?} over {:?} in y_test ...",
+        index3_w_pred.len(),
         index3_w.len(),
         first_row.len()
     );
 
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
-    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-
+    let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    /*
     info!(
-        "Found given digit {:?} times out of total {:?} in y_prediction_train ...",
+        "Predicted given digit {:?} times out of total {:?} in y_prediction_train ...",
         index3_w.len(),
         first_row.len()
     );
-
+    */
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     info!(
-        "Found given digit  {:?} times out of total {:?} in y_train ...",
+        "Predicted the given digit {:?} out of {:?} over {:?} in y_train ...",
+        index3_w_pred.len(),
         index3_w.len(),
         first_row.len()
     );

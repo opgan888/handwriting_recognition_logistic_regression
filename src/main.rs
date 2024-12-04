@@ -170,6 +170,7 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     */
 
     println!("Train model to classify a given digit {}!", string_number);
+    info!("Train model to classify a given digit {:?}!", string_number);
 
     let digit: f32 = parse_digit(string_number)?;
 
@@ -217,10 +218,12 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     // info!("main model_cmd w shape {:?}", _w.shape());
     info!("main model_cmd: cost {:?}.", costs);
 
+    /*
     // find the index of elements in _y_prediction_test equals 1.0
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = _y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+
     println!(
         "Predict {:?}, {:?} out of {:?} in Y_prediction_test", digit,
         index3_w.len(),
@@ -231,7 +234,7 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
         index3_w.len(),
         first_row.len()
     );
-
+    */
     Ok(())
 }
 
