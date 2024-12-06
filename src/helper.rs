@@ -451,14 +451,23 @@ pub fn model(
 
     }
     // 6 Dec 2024
-    let mut corect = Vec::new();
-    for (index, number) in &y_prediction_train.iter().enumerate(){
-        if *number == &y_train[0, index]  {
-            correct.push(index)
+    let mut correct_digit_detection_train = Vec::new();
+    for (index, number) in y_prediction_train.iter().enumerate(){
+        if *number == y_train[(0, index)]  {
+            if *number == 1.0 {
+                correct_digit_detection_train.push(index)
+            }
         }
     }
 
-
+    let mut correct_digit_detection_test = Vec::new();
+    for (index, number) in y_prediction_test.iter().enumerate(){
+        if *number == y_test[(0, index)]  {
+            if *number == 1.0 {
+                correct_digit_detection_test.push(index)
+            }
+        }
+    }
     info!(
         "train accuracy: {:?}",
         100.0 - ((&y_prediction_train - y_train).abs()).mean().unwrap() * 100.0
@@ -487,7 +496,7 @@ pub fn model(
         "Predicted the given digit {:?} out of {:?} correct {:?} over {:?} in y_test ...",
         index3_w_pred.len(),
         index3_w.len(),
-        correct.len(),
+        correct_digit_detection_test.len(),
         first_row.len()
     );
 
@@ -505,9 +514,10 @@ pub fn model(
     let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     info!(
-        "Predicted the given digit {:?} out of {:?} over {:?} in y_train ...",
+        "Predicted the given digit {:?} out of {:?} correct {:?}  over {:?} in y_train ...",
         index3_w_pred.len(),
         index3_w.len(),
+        correct_digit_detection_train.len(),
         first_row.len()
     );
     /*
