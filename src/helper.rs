@@ -450,6 +450,14 @@ pub fn model(
         );
 
     }
+    // 6 Dec 2024
+    let mut corect = Vec::new();
+    for (index, number) in &y_prediction_train.iter().enumerate(){
+        if *number == &y_train[0, index]  {
+            correct.push(index)
+        }
+    }
+
 
     info!(
         "train accuracy: {:?}",
@@ -476,9 +484,10 @@ pub fn model(
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
-        "Predicted the given digit {:?} out of {:?} over {:?} in y_test ...",
+        "Predicted the given digit {:?} out of {:?} correct {:?} over {:?} in y_test ...",
         index3_w_pred.len(),
         index3_w.len(),
+        correct.len(),
         first_row.len()
     );
 
