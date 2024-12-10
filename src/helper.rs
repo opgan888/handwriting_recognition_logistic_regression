@@ -451,6 +451,7 @@ pub fn model(
 
     }
     // 6 Dec 2024
+    // if prediction equals actual digit (represented by 1.0) in train dataset, store the index of occurance 
     let mut correct_digit_detection_train = Vec::new();
     for (index, number) in y_prediction_train.iter().enumerate(){
         if *number == y_train[(0, index)]  {
@@ -460,6 +461,7 @@ pub fn model(
         }
     }
 
+    // if prediction equals actual digit (represented by 1.0) in test dataset, store the index of occurance
     let mut correct_digit_detection_test = Vec::new();
     for (index, number) in y_prediction_test.iter().enumerate(){
         if *number == y_test[(0, index)]  {
@@ -477,6 +479,7 @@ pub fn model(
         100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
     );
 
+    // determine the indexes of occurance of the given digit (rep by 1.0) in prediction of test dataset (y prediction test dataset) and actual (y test dataset) below)
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
@@ -487,22 +490,35 @@ pub fn model(
         first_row.len()
     );
     */
-    // given digit?
+
+    // given digit is rep by 1.0
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
 
     info!(
-        "Predicted the given digit {:?} out of {:?} correct {:?} over {:?} in y_test ...",
+        "Correct Prediction of given digit in the test dataset: {:?} out of {:?} of given digit over the total {:?}",
+        correct_digit_detection_test.len(),
+        index3_w.len(),
+        first_row.len()
+    );
+
+    /*
+    info!(
+        "Prediction of given digit in the test dataset: {:?} out of {:?} correct {:?} over {:?} in y_test ...",
         index3_w_pred.len(),
         index3_w.len(),
         correct_digit_detection_test.len(),
         first_row.len()
     );
+    */
 
+    // determine the indexes of occurance of the given digit (rep by 1.0) in prediction of train dataset (y prediction train dataset) and actual (y train dataset) below)
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
+    // the issue with using index3_w_pred is when the occurance might not be coincide with the actual
+
     /*
     info!(
         "Predicted given digit {:?} times out of total {:?} in y_prediction_train ...",
@@ -514,22 +530,14 @@ pub fn model(
     let first_row: Vec<f32> = y_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
     info!(
-        "Predicted the given digit {:?} out of {:?} correct {:?}  over {:?} in y_train ...",
-        index3_w_pred.len(),
-        index3_w.len(),
+        "Correct Prediction of given digit in the train dataset: {:?} out of {:?} of given digit over the total {:?}",    
+        //"Prediction of train dataset: the given digit {:?} out of {:?} correct {:?}  over {:?} in y_train ...",
         correct_digit_detection_train.len(),
+        // index3_w_pred.len(),
+        index3_w.len(),
         first_row.len()
     );
-    /*
-    d = {
-        "costs": costs,
-        "Y_prediction_test": Y_prediction_test,
-        "Y_prediction_train": Y_prediction_train,
-        "w": w,
-        "b": b,
-        "learning_rate": learning_rate,
-        "num_iterations": num_iterations,
-    } */
+
 
     (
         costs,
