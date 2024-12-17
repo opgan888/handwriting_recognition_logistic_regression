@@ -34,24 +34,6 @@ pub fn matrixmultiply(w: &Array2<f32>, b: f32, x: &Array2<f32>) -> Array2<f32> {
     (w.t()).dot(x) + b
 }
 
-/*
-
-fn safe_powf(base: f64, exponent: f64) -> Result<f64, String> {
-    if base < 0.0 && exponent.fract() != 0.0 {
-        return Err("Negative base with non-integer exponent".to_string());
-    }
-
-    let result = base.powf(exponent);
-
-    if result.is_nan() || result.is_infinite() {
-        return Err("Numerical instability".to_string());
-    }
-
-    Ok(result)
-}
-
-*/
-
 //pub fn sigmoid(z: f32) -> f32 {
 pub fn sigmoid(z: Array2<f32>) -> Array2<f32> {
     /*
@@ -136,56 +118,14 @@ pub fn propagate(
     # And don't use loops for the sum.
     */
 
-    //let w: Array2<f32> = Array2::zeros((784, 1));
-    //let x1: &Array2<f32> = &Array2::zeros((784, 60000));
-
-    //let A = sigmoid(np.dot(np.transpose(w), X) + b)
-    // let z = (w.t()).dot(x) + b;
-    //let wt = w.t();
-    //println!("w shape: {:?}", w.shape());
-    //println!("x shape: {:?}", x.shape());
-
-    //println!("Bef dot");
-    //let z1 = wt.dot(x);
-    //println!("After dot");
-
-    //let z = z1 + b;
-
-    // let z = w.t().dot(x) + b;
-
     let a = sigmoid(w.t().dot(x) + b);
     //let a = sigmoid(z);
 
     // log (python) and ln (Rust) refers to natural log
     // cost = -(1 / m) * np.sum((Y * np.log(A) + (1 - Y) * np.log(1 - A)))
-    /*
-    let cost = (-1.0 / m)
-        * ((y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln())))
-            .iter()
-            .sum::<f32>());
-    */
 
     let cost: f32 =
         -(y * (&a.mapv(|e| e.ln())) + (1.0 - y) * ((1.0 - &a).mapv(|d| d.ln()))).sum() / m;
-
-    //println!("cost {:?} ", cost);
-
-    /*
-    println!(
-        "y * (&a.mapv(|e| e.log())) {:?} ", y * (&a.mapv(|e| e.ln()))
-    );
-
-    println!(
-        "m {:?} ", m
-    );
-
-    println!(
-        "a {:?} ", a
-    );
-
-    println!(
-        "cost {:?} ", cost
-    ); */
 
     //# BACKWARD PROPAGATION (TO FIND GRAD)
 
@@ -265,21 +205,8 @@ pub fn optimize(
         // info!("optimize debug message: db {:?}.", db);
         // info!("optimize debug message: cost {:?}.", cost);
 
-        /*
-        # Retrieve derivatives from grads
-        dw = grads["dw"]
-        db = grads["db"]
-
-
-        // update rule (≈ 2 lines of code)
-        w -= learning_rate * dw
-        b -= learning_rate * db
-        */
-
         w_owned = w_owned - learning_rate * &dw; // Dereference w_owned and apply element-wise multiplication
         b_owned = b_owned - learning_rate * db;
-        //w = &w_owned;
-        //b = b_owned;
 
         // Record the costs print interval
         let print_interval = 100;
@@ -342,6 +269,7 @@ pub fn predict(w: &Array2<f32>, b: f32, x: &Array2<f32>) -> Array2<f32> {
     */
     //# Using no loop for better efficieny
     //# Y_prediction[A > 0.5] = 1
+
     // Iterate over the elements of 'a' and assign values to 'y_prediction'
     for ((i, j), value) in a.indexed_iter() {
         if *value > 0.5 {
@@ -448,13 +376,12 @@ pub fn model(
             "test accuracy: {:?}",
             100.0 - ((&y_prediction_test - y_test).abs()).mean().unwrap() * 100.0
         );
-
     }
     // 6 Dec 2024
-    // if prediction equals actual digit (represented by 1.0) in train dataset, store the index of occurance 
+    // if prediction equals actual digit (represented by 1.0) in train dataset, store the index of occurance
     let mut correct_digit_detection_train = Vec::new();
-    for (index, number) in y_prediction_train.iter().enumerate(){
-        if *number == y_train[(0, index)]  {
+    for (index, number) in y_prediction_train.iter().enumerate() {
+        if *number == y_train[(0, index)] {
             if *number == 1.0 {
                 correct_digit_detection_train.push(index)
             }
@@ -463,8 +390,8 @@ pub fn model(
 
     // if prediction equals actual digit (represented by 1.0) in test dataset, store the index of occurance
     let mut correct_digit_detection_test = Vec::new();
-    for (index, number) in y_prediction_test.iter().enumerate(){
-        if *number == y_test[(0, index)]  {
+    for (index, number) in y_prediction_test.iter().enumerate() {
+        if *number == y_test[(0, index)] {
             if *number == 1.0 {
                 correct_digit_detection_test.push(index)
             }
@@ -483,13 +410,13 @@ pub fn model(
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    /*
-    info!(
-        "Predicted given digit {:?} times out of total {:?} in _y_prediction_test",
-        index3_w_pred.len(),
-        first_row.len()
-    );
-    */
+                                                                        /*
+                                                                        info!(
+                                                                            "Predicted given digit {:?} times out of total {:?} in _y_prediction_test",
+                                                                            index3_w_pred.len(),
+                                                                            first_row.len()
+                                                                        );
+                                                                        */
 
     // given digit is rep by 1.0
     let target_value: f32 = 1.0;
@@ -517,7 +444,7 @@ pub fn model(
     let target_value: f32 = 1.0;
     let first_row: Vec<f32> = y_prediction_train.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
     let index3_w_pred = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-    // the issue with using index3_w_pred is when the occurance might not be coincide with the actual
+                                                                        // the issue with using index3_w_pred is when the occurance might not be coincide with the actual
 
     /*
     info!(
@@ -537,7 +464,6 @@ pub fn model(
         index3_w.len(),
         first_row.len()
     );
-
 
     (
         costs,

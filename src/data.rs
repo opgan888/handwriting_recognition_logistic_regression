@@ -5,14 +5,7 @@ use ndarray::{Array2, Array3}; //, s}; //, Zip};
 // arr: &[T] represents a slice, which is a reference to a contiguous sequence of elements of type T (type T is a declaration of a type alias)
 // target: &T is a function parameter declaration that signifies a reference to a value of type T
 // usize is unsigned integer type
-/*
-fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
-    arr.iter()
-        .enumerate()
-        .filter(|(_, x)| **x == *target)
-        .map(|(i, _)| i)
-        .collect()
-} */
+
 pub fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
     arr.iter()
         .enumerate()
@@ -23,7 +16,6 @@ pub fn find_indices_filter<T: PartialEq>(arr: &[T], target: &T) -> Vec<usize> {
 // Loading data for handwriting pub fn injest(digit: i32) {
 
 pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>) {
-    //pub fn injest(digit: f32) -> ([[f32; 60000]; 784], [[f32; 60000]; 1] , [[f32; 10000]; 784], [[f32; 10000]; 1] ){
     // The default path to the MNIST data files is /data of top layer crate
 
     let m_train = 60_000;
@@ -69,7 +61,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     // # train set y and test_set_y are originally row vector (m, 1) array. Reshape to column vector (1,m) array
     println!("Shape of train_labels: {:?}", train_labels.shape());
     println!("Shape of test_labels: {:?}", test_labels.shape());
-    // println!("Element of train_labels: {:?}", train_labels[(0, 0)]);
 
     // In handwriting dataset, y is digits 0 to 9 and requires 10 output neurons to classify all 10 digits
     // Since this is single output NN, consider classifying one digit at one time for now
@@ -92,12 +83,8 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
                                                                                    //println!("Found {} at index {:?} in first_column", target_number_f, index3_col.len());
 
     // Using iterators and map to modify elements
-    // index3_col.iter().enumerate().for_each(|(i, x)| {
-    // index3_col.iter().enumerate().for_each(|(_, x)| {
     let mut index: usize = 0;
     index3_train_labels.iter().for_each(|x| {
-        //println!("index {:?} value {:?}", i, x);
-        //let index: usize = {*x};
         index = *x;
         train_labels_binary[[0, index]] = 1.0
     });
@@ -134,12 +121,7 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
                                                                                        //println!("Found {} at index {:?} in first_column", target_number_f, index3_col_test.len());
 
     // Using iterators and map to modify elements
-    // index3_col.iter().enumerate().for_each(|(i, x)| {
-    // index3_col.iter().enumerate().for_each(|(_, x)| {
-    // let mut index: usize = 0;
     index3_test_labels.iter().for_each(|x| {
-        //println!("index {:?} value {:?}", i, x);
-        //let index: usize = {*x};
         index = *x;
         test_labels_binary[[0, index]] = 1.0
     });
@@ -175,13 +157,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     println!("Height/Width of each image: num_px = {:?}", num_px2);
     println!("Each image is of size: {:?} {:?}", num_px2, num_px2);
 
-    /*
-    println!("Shape of train_data: {:?}", train_data.shape());
-    println!("Shape of test_data: {:?}", test_data.shape());
-    println!("Shape of train_labels: {:?}", train_labels.shape());
-    println!("Shape of test_labels: {:?}", test_labels.shape());
-    */
-
     // Reshape the ArrayView1 into a 2D array
     let _shape = (1, m_train); // Reshape into a (1,m) matrix
 
@@ -214,7 +189,6 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
         "Flattened test_labels shape: {:?}",
         test_labels_colvector.shape()
     );
-
 
     //return train_set_x, train_set_y, test_set_x, test_set_y
     let owned_flattened_train_data = flattened_train_data.to_owned(); // OwnedRepr: Represents an array that owns its data. You can modify the elements of this array directly.
