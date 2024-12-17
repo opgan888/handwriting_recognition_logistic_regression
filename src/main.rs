@@ -126,8 +126,6 @@ fn predict_test_example_cmd(string_number: &str) -> Result<(), Errors> {
         .into_shape((test_set_x.shape()[0], 1))
         .map_err(Errors::ShapeError)?;
 
-    // info!("predict_test_example_cmd: read_npy w {:?}", w.shape());
-    // info!("predict_test_example_cmd: read_npy b shape {:?}", b.shape());
     info!("predict_test_example_cmd: read_npy b {:?}", b[(0, 0)]);
     info!(
         "predict_test_example_cmd: read_npy test_set_x {:?}",
@@ -145,22 +143,52 @@ fn predict_test_example_cmd(string_number: &str) -> Result<(), Errors> {
     let p = "Prediction is ".to_string() + &predict(&w, b[(0, 0)], &test_set_x_example).to_string();
     info!("predict_test_example_cmd  {:?}  {:?} ", a, p);
 
-    /*
-
-        test_set_x_example = test_set_x[:, example].reshape(test_set_x[:, example].size, 1)
-        a = "Actual = " + str(test_set_y[:, example])
-        p = "Prediction = " + str(predict(w, b, test_set_x_example))
-        click.echo(a)
-        click.echo(p)
-        log("Example " + str(example) + " :: " + a + " : " + p)
-    */
-
     Ok(())
 }
 
 fn predict_unseen_example_cmd(string_number: &str) -> Result<(), Errors> {
     println!("Predict digit from image file {}!", string_number);
 
+    /*
+        # injest test datasets from the NPY file
+    # test_set_x = np.load("test_set_x.npy")
+    num_px = 28  # test_set_x.shape[1]
+    log("num_px " + str(num_px))
+
+    # injest image file my_image.jpg
+    # Preprocess the image to fit  the NN algorithm.
+    fname = "assets/images/" + file_name
+    image = np.array(Image.open(fname).resize((num_px, num_px)))
+
+    imageori = np.array(Image.open(fname))
+    log("imageori shape: " + str(imageori.shape))
+
+    image = image[:, :, 0]
+    # plt.imshow(image)
+    log("image.shape " + str(image.shape))
+    click.echo("image.shape " + str(image.shape))
+
+    image = image / 255.0
+    image = image.reshape((1, num_px * num_px)).T
+
+    log("image.shape " + str(image.shape))
+    click.echo("image.shape " + str(image.shape))
+
+    # Load trained model from the NPY file
+    w = np.load("model_weights.npy")
+    b = np.load("model_bias.npy")[
+        0
+    ]  # convert a Python array with a single element to a scalar
+
+    a = "Actual = " + str(file_name)
+    p = "Prediction = " + str(predict(w, b, image))
+    click.echo(a)
+    click.echo(p)
+    log("Example " + str(file_name) + " :: " + a + " : " + p)
+
+    */
+
+    
     Ok(())
 }
 
@@ -215,12 +243,8 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
 
     // overwrite the file if it exists
 
-    // let _ = write_npy("model_weights.npy", &_w)?; .map_err(|_| MyError::ParseFloatError)
-    let _ = write_npy("model_weights.npy", &_w).map_err(|_| Errors::WriteNpyError); // .map_err(Errors::ParseFloatError);
+    let _ = write_npy("model_weights.npy", &_w).map_err(|_| Errors::WriteNpyError); 
     let _ = write_npy("model_bias.npy", &b_array).map_err(|_| Errors::WriteNpyError);
-    //let _ = write_npy("model_bias.npy", &b_array)?;
-    //let _ = write_npy("test_set_x.npy", &_test_x)?;
-    //let _ = write_npy("test_set_y.npy", &_y_prediction_test)?;
     let _ = write_npy("test_set_x.npy", &_test_x).map_err(|_| Errors::WriteNpyError);
     let _ = write_npy("test_set_y.npy", &_y_prediction_test).map_err(|_| Errors::WriteNpyError);
 
@@ -229,23 +253,6 @@ fn model_cmd(string_number: &str) -> Result<(), Errors> {
     // info!("main model_cmd w shape {:?}", _w.shape());
     info!("main model_cmd: cost {:?}.", costs);
 
-    /*
-    // find the index of elements in _y_prediction_test equals 1.0
-    let target_value: f32 = 1.0;
-    let first_row: Vec<f32> = _y_prediction_test.row(0).iter().cloned().collect(); // Extract the first column of 2D Array
-    let index3_w = find_indices_filter(&first_row, &target_value); // search Vector of  Vec<f32>
-
-    println!(
-        "Predict {:?}, {:?} out of {:?} in Y_prediction_test", digit,
-        index3_w.len(),
-        first_row.len()
-    );
-    info!(
-        "Predict {:?}, {:?} out of {:?} in Y_prediction_test ", digit,
-        index3_w.len(),
-        first_row.len()
-    );
-    */
     Ok(())
 }
 
