@@ -22,7 +22,8 @@ pub fn injest(digit: f32) -> (Array2<f32>, Array2<f32>, Array2<f32>, Array2<f32>
     let m_test = 10_000;
     let _num_px = 28;
 
-    // Download and Load the MNIST dataset
+    // Download and Load the MNIST dataset, a 28x28 pixel grayscale image
+    // Handwritten digit from 0 to 9. Each pixel value ranges from 0 to 255, where 0 represents black and 255 represents white
     let Mnist {
         trn_img,
         trn_lbl,
