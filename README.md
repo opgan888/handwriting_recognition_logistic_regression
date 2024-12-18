@@ -67,8 +67,9 @@ statrs = "0.17.1"
 - Run main injest command: ``` cargo run main injest 4 ``` 4 refers to the number for recognising 
 - Run main modelingcommand: ``` cargo run main modeling 4 ``` 4 refers to the number for recognising 
 - Run main predict test example command: ``` cargo run main predict_test_example 4 ``` 4 refers to the index of test example datasets for recognising 
-- Run main command: ``` cargo run main predict_unseen_example image.jpeg ``` image.jpeg refers to the image file name for recognising 
+- Run main command: ``` cargo run main predict_unseen_example image.jpeg ``` image.jpeg refers to the image file name for recognising ... completed
 - Run test command: ``` cargo test ```
+- Run release  ``` ./target/release/handwritingrecognition main modeling 9```
 
 ## Machine Learning
 * Injest 
